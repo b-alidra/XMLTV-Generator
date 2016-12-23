@@ -1,0 +1,19 @@
+{
+    "name": "b-alidra/xmltv",
+    "description": "XMLTV generator",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Belkacem Alidra",
+            "email": "dev@b-alidra.com"
+        }
+    ],
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "^5.7"
+    },
+    "autoload": {
+        "psr-4": { "XMLTV\\": "src" }
+    }
+}
