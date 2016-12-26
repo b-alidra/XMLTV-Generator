@@ -14,20 +14,6 @@ class Xmltv extends XmltvElement
     protected $channels = [];
     protected $programs = [];
 
-    public function __construct($attributes = [], $children = [])
-    {
-        $this->_xml = new \SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?>
-            <!DOCTYPE tv SYSTEM "xmltv.dtd"><tv/>');
-
-        foreach ($attributes as $name => $value) {
-            $this->addAttribute($name, $value);
-        }
-
-        foreach ($children as $name => $value) {
-            $this->addChild($name, $value);
-        }
-    }
-
     public function getTagName()
     {
         return 'tv';
@@ -53,17 +39,17 @@ class Xmltv extends XmltvElement
         ];
     }
 
-    public function addChannel($attributes = [], $children = [])
+    public function addChannel($attributes = [])
     {
-        $channel = new XmltvChannel($attributes, $children);
+        $channel = new Channel($attributes);
         $this->channels[] = $channel;
 
         return $channel;
     }
 
-    public function addProgram($attributes = [], $children = [])
+    public function addProgram($attributes = [])
     {
-        $program = new XmltvProgram($attributes, $children);
+        $program = new Program($attributes);
         $this->programs[] = $program;
 
         return $program;
@@ -72,6 +58,11 @@ class Xmltv extends XmltvElement
     public function output()
     {
         $this->validate();
+
+        $implementation = new DOMImplementation();
+        $dtd            = $implementation->createDocumentType('tv', 'SYSTEM', 'http://xmltv.cvs.sourceforge.net/viewvc/xmltv/xmltv/xmltv.dtd');
+        $document = $implementation->createDocument('', '', $dtd);
+        $document->encoding = 'UTF-8';
 
         $xml = $this->_xml;
 

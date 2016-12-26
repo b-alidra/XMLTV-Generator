@@ -7,7 +7,7 @@ namespace XMLTV;
  * @author
  *   Belkacem Alidra <dev@b-alidra.com>
  */
-class XmltvChannel extends XmltvElement
+class Channel extends XmltvElement
 {
     public function getTagName()
     {

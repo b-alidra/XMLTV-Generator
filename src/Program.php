@@ -7,7 +7,7 @@ namespace XMLTV;
  * @author
  *   Belkacem Alidra <dev@b-alidra.com>
  */
-class XmltvProgram extends XmltvElement
+class Program extends XmltvElement
 {
     public function getTagName()
     {
@@ -50,7 +50,7 @@ class XmltvProgram extends XmltvElement
             'previously-shown' => XmltvElement::SINGLE,
             'premiere'         => XmltvElement::SINGLE,
             'last-chance'      => XmltvElement::SINGLE,
-            'new'              => XmltvElement::SINGLE,
+            '_new'              => XmltvElement::SINGLE,
             'subtitles'        => XmltvElement::ALLOWED,
             'rating'           => XmltvElement::ALLOWED,
             'star-rating'      => XmltvElement::ALLOWED,
