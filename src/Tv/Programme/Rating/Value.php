@@ -1,7 +1,7 @@
 <?php
 namespace XMLTV\Tv\Programme\Rating;
 
-use \Xmltv\XmltvElement;
+use \XMLTV\XmltvElement;
 
 /**
  * XMLTV program rating value

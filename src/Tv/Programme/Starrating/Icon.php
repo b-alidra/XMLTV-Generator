@@ -1,7 +1,7 @@
 <?php
 namespace XMLTV\Tv\Programme\StarRating;
 
-use \Xmltv\XmltvElement;
+use \XMLTV\XmltvElement;
 
 /**
  * XMLTV program star rating icon

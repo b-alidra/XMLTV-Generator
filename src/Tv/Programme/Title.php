@@ -1,11 +1,11 @@
 <?php
 namespace XMLTV\Tv\Programme;
 
-use \Xmltv\XmltvElement;
+use \XMLTV\XmltvElement;
 
 /**
 
-use \Xmltv\XmltvElement;
+use \XMLTV\XmltvElement;
  * XMLTV program title
  *
  * @author

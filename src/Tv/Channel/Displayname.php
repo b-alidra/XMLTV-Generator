@@ -1,7 +1,7 @@
 <?php
 namespace XMLTV\Tv\Channel;
 
-use \Xmltv\XmltvElement;
+use \XMLTV\XmltvElement;
 
 /**
  * XMLTV channel display name

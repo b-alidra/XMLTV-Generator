@@ -1,7 +1,7 @@
 <?php
 namespace XMLTV\Tv\Programme\Credits;
 
-use \Xmltv\XmltvElement;
+use \XMLTV\XmltvElement;
 
 /**
  * XMLTV program credits director

@@ -1,7 +1,7 @@
 <?php
 namespace XMLTV\Tv\Programme\Video;
 
-use \Xmltv\XmltvElement;
+use \XMLTV\XmltvElement;
 
 /**
  * XMLTV program video colour

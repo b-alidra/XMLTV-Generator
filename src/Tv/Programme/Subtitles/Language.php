@@ -1,7 +1,7 @@
 <?php
 namespace XMLTV\Tv\Programme\Subtitles;
 
-use \Xmltv\XmltvElement;
+use \XMLTV\XmltvElement;
 
 /**
  * XMLTV program subtitles language

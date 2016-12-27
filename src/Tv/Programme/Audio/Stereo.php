@@ -1,7 +1,7 @@
 <?php
 namespace XMLTV\Tv\Programme\Audio;
 
-use \Xmltv\XmltvElement;
+use \XMLTV\XmltvElement;
 
 /**
  * XMLTV program audio stereo
