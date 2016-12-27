@@ -9,73 +9,54 @@ namespace XMLTV;
  * @author
  *   Belkacem Alidra <dev@b-alidra.com>
  */
-class Xmltv extends XmltvElement
+class Xmltv
 {
-    protected $channels = [];
-    protected $programs = [];
+    /**
+     * @var \DomDocument
+     */
+    protected static $document;
 
-    public function getTagName()
+    /**
+     * @var XMLTV\Tv
+     */
+    protected $root;
+
+    public function __construct($attributes = [])
     {
-        return 'tv';
+        $this->root = new Tv($attributes);
+        $this->root->appendTo(static::getDocument());
     }
 
-    public function getAllowedAttributes()
+    public static function getDocument()
     {
-        return [
-            'date'                => XmltvElement::ALLOWED,
-            'source-info-url'     => XmltvElement::ALLOWED,
-            'source-info-name'    => XmltvElement::ALLOWED,
-            'source-data-url'     => XmltvElement::ALLOWED,
-            'generator-info-name' => XmltvElement::ALLOWED,
-            'generator-info-url'  => XmltvElement::ALLOWED,
-        ];
-    }
+        if (is_null(static::$document)) {
+            $implementation = new \DOMImplementation();
+            $dtd            = $implementation->createDocumentType('tv', 'SYSTEM', 'http://xmltv.cvs.sourceforge.net/viewvc/xmltv/xmltv/xmltv.dtd');
+            static::$document = $implementation->createDocument('', '', $dtd);
 
-    public function getAllowedChildren()
-    {
-        return [
-            'channel'             => XmltvElement::ALLOWED,
-            'programme'           => XmltvElement::ALLOWED
-        ];
-    }
-
-    public function addChannel($attributes = [])
-    {
-        $channel = new Channel($attributes);
-        $this->channels[] = $channel;
-
-        return $channel;
-    }
-
-    public function addProgram($attributes = [])
-    {
-        $program = new Program($attributes);
-        $this->programs[] = $program;
-
-        return $program;
-    }
-
-    public function output()
-    {
-        $this->validate();
-
-        $implementation = new DOMImplementation();
-        $dtd            = $implementation->createDocumentType('tv', 'SYSTEM', 'http://xmltv.cvs.sourceforge.net/viewvc/xmltv/xmltv/xmltv.dtd');
-        $document = $implementation->createDocument('', '', $dtd);
-        $document->encoding = 'UTF-8';
-
-        $xml = $this->_xml;
-
-        foreach ($this->channels as $channel) {
-            $channel->validate();
-            $xml = XmltvElement::merge($xml, $channel->getXml());
+            static::$document->encoding           = 'UTF-8';
+            static::$document->preserveWhiteSpace = false;
+            static::$document->formatOutput       = true;
         }
 
-        foreach ($this->programs as $program) {
-            $program->validate();
-            $xml = XmltvElement::merge($xml, $program->getXml());
-        }
+        return static::$document;
+    }
 
-        return html_entity_decode($xml->asXml(), ENT_NOQUOTES, 'UTF-8');
+    public function validate()
+    {
+        return static::getDocument()->validate();
+    }
+
+    public function toXml()
+    {
+        $this->root->validate();
+        return static::getDocument()->saveXml();
+    }
+
+    public function __call($name, $arguments)
+    {
+        if (!method_exists($this, $name)) {
+            return call_user_func_array([$this->root, $name], $arguments);
+        }
     }
 }

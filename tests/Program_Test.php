@@ -1,9 +1,9 @@
 <?php
 use XMLTV\Xmltv;
 use XMLTV\XmltvElement;
-use XMLTV\Program;
+use XMLTV\Tv\Programme;
 
-class Program_Test extends PHPUnit_Framework_TestCase {
+class Programme_Test extends PHPUnit_Framework_TestCase {
 
     public function testOutput()
     {
@@ -27,16 +27,16 @@ class Program_Test extends PHPUnit_Framework_TestCase {
   <desc lang="fr">Description de la chaine de test</desc>
   <desc lang="en">Test channel description</desc>
   <credits>
-    <actor>Test actor</actor>
-    <adapter>Test adapter</adapter>
-    <commentator>Test commentator</commentator>
-    <composer>Test composer</composer>
     <director>Test director</director>
-    <editor>Test editor</editor>
-    <guest>Test guest</guest>
-    <presenter>Test presenter</presenter>
-    <producer>Test producer</producer>
+    <actor>Test actor</actor>
     <writer>Test writer</writer>
+    <adapter>Test adapter</adapter>
+    <producer>Test producer</producer>
+    <composer>Test composer</composer>
+    <editor>Test editor</editor>
+    <presenter>Test presenter</presenter>
+    <commentator>Test commentator</commentator>
+    <guest>Test guest</guest>
   </credits>
   <date>20160615</date>
   <category lang="fr">Horreur</category>
@@ -45,15 +45,15 @@ class Program_Test extends PHPUnit_Framework_TestCase {
   <keyword lang="en">Fantastic</keyword>
   <language>fr</language>
   <orig-language>en</orig-language>
-  <length>120</length>
-  <icon>https://b-alidra.com/icon.png</icon>
+  <length units="minutes">120</length>
+  <icon src="https://b-alidra.com/icon.png"/>
   <url>https://b-alidra.com</url>
   <country>GB</country>
   <episode-num>0.0.0/1</episode-num>
   <video>
-    <aspect/>
-    <colour/>
     <present>yes</present>
+    <colour/>
+    <aspect/>
     <quality/>
   </video>
   <audio>
@@ -62,20 +62,21 @@ class Program_Test extends PHPUnit_Framework_TestCase {
   <previously-shown/>
   <premiere/>
   <last-chance/>
-  <new/>
   <subtitles>
     <language>English</language>
   </subtitles>
   <rating>
-    <icon>https://b-alidra.com/icon.png</icon>
+    <value>1/5</value>
+    <icon src="https://b-alidra.com/icon.png"/>
   </rating>
   <star-rating>
-    <icon>https://b-alidra.com/icon.png</icon>
+    <value>1/5</value>
+    <icon src="https://b-alidra.com/icon.png"/>
   </star-rating>
-  <review/>
+  <review type="text" source="Web" reviewer="Belkacem Alidra" lang="fr"/>
 </programme>
 EOF;
-        $program = new Program($attributes);
+        $program = new Programme($attributes);
         $program
             ->addTitle(['lang' => 'fr'], 'Chaine de test')
             ->addTitle(['lang' => 'en'], 'Test channel')
@@ -103,8 +104,8 @@ EOF;
             ->addKeyword(['lang' => 'en'], 'Fantastic')
             ->addLanguage([], 'fr')
             ->addOriglanguage([], 'en')
-            ->addLength([], 120)
-            ->addIcon([], 'https://b-alidra.com/icon.png')
+            ->addLength(['units' => 'minutes'], 120)
+            ->addIcon(['src' => 'https://b-alidra.com/icon.png'])
             ->addUrl([], 'https://b-alidra.com')
             ->addCountry([], 'GB')
             ->addEpisodenum([], '0.0.0/1')
@@ -121,18 +122,27 @@ EOF;
             ->addPreviouslyshown([])
             ->addPremiere([], '')
             ->addLastchance([], '')
-            ->add_new([], '')
+            //->add_new([], '')
             ->addSubtitles([], function (&$subtitles) {
                 $subtitles->addLanguage([], 'English');
             })
             ->addRating([], function (&$rating) {
-                $rating->addIcon([], 'https://b-alidra.com/icon.png');
+                $rating
+                    ->addValue([], '1/5')
+                    ->addIcon(['src' => 'https://b-alidra.com/icon.png']);
             })
             ->addStarrating([], function (&$starrating) {
-                $starrating->addIcon([], 'https://b-alidra.com/icon.png');
+                $starrating
+                    ->addValue([], '1/5')
+                    ->addIcon(['src' => 'https://b-alidra.com/icon.png']);
             })
-            ->addReview([]);
+            ->addReview([
+                'type'     => 'text',
+                'source'   => 'Web',
+                'reviewer' => 'Belkacem Alidra',
+                'lang'     => 'fr'
+            ]);
 
-        $this->assertEquals($expected_xml, (string)XmltvElement::getDocument()->saveXml($program->getXml()));
+        $this->assertEquals($expected_xml, $program->toXml());
     }
 }

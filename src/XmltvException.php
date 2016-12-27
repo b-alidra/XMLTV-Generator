@@ -26,5 +26,5 @@ class XmltvException extends \Exception {
     const MULTIPLE_CHILD_ERROR_MESSAGE        = "%s: Multiple %s children";
     const UNKNOWN_ATTRIBUTE_ERROR_MESSAGE     = "%s: Trying to set the value of an unknown %s attribute";
     const UNKNOWN_CHILD_ERROR_MESSAGE         = "%s: Trying to add an unknown %s child";
-    const UNKNOWN_MEthOD_ERROR_MESSAGE        = "%s: Call to undefined method %s";
+    const UNKNOWN_METHOD_ERROR_MESSAGE        = "%s: Call to undefined method %s";
 }

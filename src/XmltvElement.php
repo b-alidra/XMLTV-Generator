@@ -12,14 +12,19 @@ namespace XMLTV;
 abstract class XmltvElement
 {
     /**
-     * @var DomDocument
-     */
-    protected static $document;
-
-    /**
      * @var \DomElement
      */
     protected $_xml;
+
+    /**
+     * @var \XMLTV\XmltvElement
+     */
+    protected $parent;
+
+    /**
+     * @var array of \XMLTV\XmltvElement
+     */
+    protected $children;
 
     const ALLOWED  = 0x01;
     const REQUIRED = 0x02;
@@ -29,17 +34,27 @@ abstract class XmltvElement
     abstract public function getAllowedAttributes();
     abstract public function getAllowedChildren();
 
-    public function __construct($attributes = [], $value = null)
+    public function __construct($attributes = [], $value_or_callback = null)
     {
-        $this->_xml = static::getDocument()->createElement($this->getTagName(), $value);
+        $this->children = [];
+
+        $value    =  is_callable($value_or_callback) ? null : $value_or_callback;
+        $callback = !is_callable($value_or_callback) ? null : $value_or_callback;
+
+        $this->_xml = Xmltv::getDocument()->createElement($this->getTagName(), $value);
 
         foreach ($attributes as $name => $value) {
             $this->setAttribute($name, $value);
+        }
+
+        if (!is_null($callback)) {
+            $callback($this);
         }
     }
 
     public function __call($name, $arguments)
     {
+        // Attribute setter
         if (strpos($name, 'set') === 0) {
             $called_attribute = substr($name, 3);
             foreach ($this->getAllowedAttributes() as $attribute => $rules) {
@@ -57,6 +72,7 @@ abstract class XmltvElement
                 XmltvException::UNKNOWN_ATTRIBUTE_ERROR_CODE
             );
         }
+        // Method to add a child
         elseif (strpos($name, 'add') === 0) {
             $called_child = substr($name, 3);
             foreach ($this->getAllowedChildren() as $child => $rules) {
@@ -74,6 +90,7 @@ abstract class XmltvElement
                 XmltvException::UNKNOWN_CHILD_ERROR_CODE
             );
         }
+        // Unknown method
         else {
             throw new XmltvException(
                 sprintf(
@@ -88,6 +105,13 @@ abstract class XmltvElement
 
     public function validate()
     {
+        $this->attachChildren();
+
+        foreach ($this->children as $child) {
+            $child->validate();
+        }
+
+        // Check unsupported attributes
         if ($this->_xml->hasAttributes()) {
             foreach ($this->_xml->attributes as $name => $value) {
                 if (!in_array($name, array_keys($this->getAllowedAttributes()))) {
@@ -102,6 +126,8 @@ abstract class XmltvElement
                 }
             }
         }
+
+        // Check missing required attributes
         foreach ($this->getAllowedAttributes() as $name => $rules) {
             if (!$this->_xml->hasAttribute($name) && ($rules & static::REQUIRED)) {
                 throw new XmltvException(
@@ -115,19 +141,21 @@ abstract class XmltvElement
             }
         }
 
-        if ($this->_xml->hasChildNodes()) {
-            foreach ($this->_xml->childNodes as $child) {
-                if (!in_array($child->nodeName, array_keys($this->getAllowedChildren()))) {
+        // Check unsupported children
+        if (!empty($this->children)) {
+            foreach ($this->children as $child) {
+                if (!in_array($child->getTagName(), array_keys($this->getAllowedChildren()))) {
                     throw new XmltvException(
-                        sprintf(XmltvException::UNSUPPORTED_CHILD_ERROR_MESSAGE, get_called_class(), $name),
+                        sprintf(XmltvException::UNSUPPORTED_CHILD_ERROR_MESSAGE, get_called_class(), $child->getTagName()),
                         XmltvException::UNSUPPORTED_CHILD_ERROR_CODE
                     );
                 }
             }
         }
 
+        // Check missing required children and single children
         foreach ($this->getAllowedChildren() as $name => $rules) {
-            $xpath    = new \DOMXPath(static::getDocument());
+            $xpath    = new \DOMXPath(Xmltv::getDocument());
             $children = $xpath->query('./'.$name, $this->_xml);
             if ($children->length == 0 && ($rules & static::REQUIRED)) {
                 throw new XmltvException(
@@ -146,47 +174,6 @@ abstract class XmltvElement
 
     }
 
-    public static function getDocument()
-    {
-        if (is_null(static::$document)) {
-            $implementation = new \DOMImplementation();
-            $dtd            = $implementation->createDocumentType('tv', 'SYSTEM', 'http://xmltv.cvs.sourceforge.net/viewvc/xmltv/xmltv/xmltv.dtd');
-            static::$document = $implementation->createDocument('', '', $dtd);
-
-            static::$document->encoding           = 'UTF-8';
-            static::$document->preserveWhiteSpace = false;
-            static::$document->formatOutput       = true;
-        }
-
-        return static::$document;
-    }
-
-    public function getXml() { return $this->_xml; }
-
-    public function addChild(string $name, array $attributes = [], $value_or_callback = null)
-    {
-        if (!in_array($name, array_keys($this->getAllowedChildren()))) {
-            throw new XmltvException(
-                sprintf(XmltvException::UNSUPPORTED_CHILD_ERROR_MESSAGE, get_called_class(), $name),
-                XmltvException::UNSUPPORTED_CHILD_ERROR_CODE
-            );
-        }
-
-        $value    =  is_callable($value_or_callback) ? null : $value_or_callback;
-        $callback = !is_callable($value_or_callback) ? null : $value_or_callback;
-
-        $childClass = get_called_class().'\\'.(ucfirst(strtolower(str_replace('-', '', $name))));
-        $child      = new $childClass($attributes, $value);
-
-        if (!is_null($callback)) {
-            $callback($child);
-        }
-        static::getDocument()->importNode($child->getXml());
-        $this->_xml->appendChild($child->getXml());
-
-        return $this;
-    }
-
     public function setAttribute($name, $value = null)
     {
         if (!in_array($name, array_keys($this->getAllowedAttributes()))) {
@@ -203,13 +190,67 @@ abstract class XmltvElement
             );
         }
 
-        $this->_xml->setAttribute($name, XmltvElement::sanitize($value));
+        $this->_xml->setAttribute($name, $value);
 
         return $this;
     }
 
-    public static function sanitize($string)
+    public function addChild(string $name, array $attributes = [], $value_or_callback = null)
     {
-        return str_replace('&', 'amp;', $string);
+        $childClass = get_called_class().'\\'.(ucfirst(strtolower(str_replace('-', '', $name))));
+        $child      = new $childClass($attributes, $value_or_callback);
+
+        $this->children[] = $child;
+
+        return $this;
+    }
+
+    public function appendTo(\DomNode $parent)
+    {
+        Xmltv::getDocument()->importNode($this->_xml);
+        $parent->appendChild($this->_xml);
+
+        $this->parent = $parent;
+    }
+
+    public function remove()
+    {
+        if ($this->parent) {
+            $this->parent->removeChild($this->_xml);
+        }
+    }
+
+    public function toXml()
+    {
+        $this->attachChildren();
+        $this->validate();
+
+        return Xmltv::getDocument()->saveXml($this->_xml);
+    }
+
+    protected function attachChildren()
+    {
+        // Remove all previously attached children, if any
+        foreach ($this->children as $child) {
+            $child->remove();
+        }
+
+        // Sort the children using the allowed children array
+        $allowed_children = array_keys($this->getAllowedChildren());
+        usort($this->children, function ($a, $b) use ($allowed_children) {
+            $index_a = array_search($a->getTagName(), $allowed_children);
+            $index_b = array_search($b->getTagName(), $allowed_children);
+            return $index_a < $index_b ? -1 : ( $index_a > $index_b ? 1 : 0 );
+        });
+
+        // Append the children
+        foreach ($this->children as $child) {
+            $child->appendTo($this->_xml);
+        }
+
+        // Go down, recursively
+        foreach ($this->children as $child) {
+            $child->attachChildren();
+        }
     }
 }

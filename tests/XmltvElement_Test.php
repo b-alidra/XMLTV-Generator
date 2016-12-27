@@ -1,7 +1,8 @@
 <?php
 use XMLTV\XmltvElement;
 
-class XmltvElement_Test extends PHPUnit_Framework_TestCase {
+class XmltvElement_Test extends PHPUnit_Framework_TestCase
+{
     protected $stub;
 
     protected function setUp()
