@@ -18,64 +18,6 @@ class Programme_Test extends PHPUnit_Framework_TestCase {
             'clumpidx'         => '1'
         ];
 
-        $expected_xml = <<<EOF
-<programme channel="test-channel" start="20161223184000" stop="20161223194000" pdc-start="20161223184000" vps-start="20161223184000" showview="???" videoplus="???" clumpidx="1">
-  <title lang="fr">Chaine de test</title>
-  <title lang="en">Test channel</title>
-  <sub-title lang="fr">Second tilre de la chaine de test</sub-title>
-  <sub-title lang="en">Test channel second title</sub-title>
-  <desc lang="fr">Description de la chaine de test</desc>
-  <desc lang="en">Test channel description</desc>
-  <credits>
-    <director>Test director</director>
-    <actor>Test actor</actor>
-    <writer>Test writer</writer>
-    <adapter>Test adapter</adapter>
-    <producer>Test producer</producer>
-    <composer>Test composer</composer>
-    <editor>Test editor</editor>
-    <presenter>Test presenter</presenter>
-    <commentator>Test commentator</commentator>
-    <guest>Test guest</guest>
-  </credits>
-  <date>20160615</date>
-  <category lang="fr">Horreur</category>
-  <category lang="en">Horror</category>
-  <keyword lang="fr">Fantastique</keyword>
-  <keyword lang="en">Fantastic</keyword>
-  <language>fr</language>
-  <orig-language>en</orig-language>
-  <length units="minutes">120</length>
-  <icon src="https://b-alidra.com/icon.png"/>
-  <url>https://b-alidra.com</url>
-  <country>GB</country>
-  <episode-num>0.0.0/1</episode-num>
-  <video>
-    <present>yes</present>
-    <colour/>
-    <aspect/>
-    <quality/>
-  </video>
-  <audio>
-    <present>yes</present>
-  </audio>
-  <previously-shown/>
-  <premiere/>
-  <last-chance/>
-  <subtitles>
-    <language>English</language>
-  </subtitles>
-  <rating>
-    <value>1/5</value>
-    <icon src="https://b-alidra.com/icon.png"/>
-  </rating>
-  <star-rating>
-    <value>1/5</value>
-    <icon src="https://b-alidra.com/icon.png"/>
-  </star-rating>
-  <review type="text" source="Web" reviewer="Belkacem Alidra" lang="fr"/>
-</programme>
-EOF;
         $program = new Programme($attributes);
         $program
             ->addTitle(['lang' => 'fr'], 'Chaine de test')
@@ -142,6 +84,65 @@ EOF;
                 'reviewer' => 'Belkacem Alidra',
                 'lang'     => 'fr'
             ]);
+
+        $expected_xml = <<<EOF
+<programme channel="test-channel" start="20161223184000" stop="20161223194000" pdc-start="20161223184000" vps-start="20161223184000" showview="???" videoplus="???" clumpidx="1">
+  <title lang="fr">Chaine de test</title>
+  <title lang="en">Test channel</title>
+  <sub-title lang="fr">Second tilre de la chaine de test</sub-title>
+  <sub-title lang="en">Test channel second title</sub-title>
+  <desc lang="fr">Description de la chaine de test</desc>
+  <desc lang="en">Test channel description</desc>
+  <credits>
+    <director>Test director</director>
+    <actor>Test actor</actor>
+    <writer>Test writer</writer>
+    <adapter>Test adapter</adapter>
+    <producer>Test producer</producer>
+    <composer>Test composer</composer>
+    <editor>Test editor</editor>
+    <presenter>Test presenter</presenter>
+    <commentator>Test commentator</commentator>
+    <guest>Test guest</guest>
+  </credits>
+  <date>20160615</date>
+  <category lang="fr">Horreur</category>
+  <category lang="en">Horror</category>
+  <keyword lang="fr">Fantastique</keyword>
+  <keyword lang="en">Fantastic</keyword>
+  <language>fr</language>
+  <orig-language>en</orig-language>
+  <length units="minutes">120</length>
+  <icon src="https://b-alidra.com/icon.png"/>
+  <url>https://b-alidra.com</url>
+  <country>GB</country>
+  <episode-num>0.0.0/1</episode-num>
+  <video>
+    <present>yes</present>
+    <colour/>
+    <aspect/>
+    <quality/>
+  </video>
+  <audio>
+    <present>yes</present>
+  </audio>
+  <previously-shown/>
+  <premiere/>
+  <last-chance/>
+  <subtitles>
+    <language>English</language>
+  </subtitles>
+  <rating>
+    <value>1/5</value>
+    <icon src="https://b-alidra.com/icon.png"/>
+  </rating>
+  <star-rating>
+    <value>1/5</value>
+    <icon src="https://b-alidra.com/icon.png"/>
+  </star-rating>
+  <review type="text" source="Web" reviewer="Belkacem Alidra" lang="fr"/>
+</programme>
+EOF;
 
         $this->assertEquals($expected_xml, $program->toXml());
     }
