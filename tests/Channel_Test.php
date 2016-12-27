@@ -4,10 +4,18 @@ use XMLTV\XmltvElement;
 use XMLTV\Tv\Channel;
 use XMLTV\Tv\Programme;
 
-class Channel_Test extends PHPUnit_Framework_TestCase {
-
+class Channel_Test extends PHPUnit_Framework_TestCase
+{
     public function testOutput()
     {
+        $channel = new Channel([ 'id' => 'test_id' ]);
+        $channel
+            ->addDisplayname(['lang' => 'fr'], 'La Une')
+            ->addDisplayname(['lang' => 'en'], 'The One')
+            ->addIcon(['width' => '80', 'height' => 120, 'src' => 'https://b-alidra.com/icon.png'])
+            ->addIcon(['width' => '80', 'height' => 120, 'src' => 'https://b-alidra.com/icon2.png'])
+            ->addUrl([], 'https://b-alidra.com');
+
         $expected_xml = <<<EOF
 <channel id="test_id">
   <display-name lang="fr">La Une</display-name>
@@ -17,13 +25,6 @@ class Channel_Test extends PHPUnit_Framework_TestCase {
   <url>https://b-alidra.com</url>
 </channel>
 EOF;
-        $channel = new Channel([ 'id' => 'test_id' ]);
-        $channel
-            ->addDisplayname(['lang' => 'fr'], 'La Une')
-            ->addDisplayname(['lang' => 'en'], 'The One')
-            ->addIcon(['width' => '80', 'height' => 120, 'src' => 'https://b-alidra.com/icon.png'])
-            ->addIcon(['width' => '80', 'height' => 120, 'src' => 'https://b-alidra.com/icon2.png'])
-            ->addUrl([], 'https://b-alidra.com');
 
         $this->assertEquals($expected_xml, $channel->toXml());
     }
@@ -104,7 +105,7 @@ EOF;
         $channel = new Channel([ 'id' => 'test_id' ]);
         $channel
             ->addDisplayname([], 'test_name')
-            ->setAttribute('id', 'second_id_value')
+            ->setId('id', 'second_id_value')
             ->validate();
     }
 }

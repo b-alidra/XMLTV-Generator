@@ -32,7 +32,7 @@ class Tv extends XmltvElement
     {
         return [
             'channel'             => XmltvElement::ALLOWED,
-            'programme'             => XmltvElement::ALLOWED
+            'programme'           => XmltvElement::ALLOWED
         ];
     }
 }

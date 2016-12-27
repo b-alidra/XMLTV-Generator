@@ -44,7 +44,7 @@ abstract class XmltvElement
         $this->_xml = Xmltv::getDocument()->createElement($this->getTagName(), $value);
 
         foreach ($attributes as $name => $value) {
-            $this->setAttribute($name, $value);
+            $this->_setAttribute($name, $value);
         }
 
         if (!is_null($callback)) {
@@ -60,7 +60,7 @@ abstract class XmltvElement
             foreach ($this->getAllowedAttributes() as $attribute => $rules) {
                 if (ucfirst(strtolower(str_replace('-', '', $attribute))) == $called_attribute) {
                     array_unshift($arguments, $attribute);
-                    return call_user_func_array([ $this, 'setAttribute' ], $arguments);
+                    return call_user_func_array([ $this, '_setAttribute' ], $arguments);
                 }
             }
             throw new XmltvException(
@@ -78,7 +78,7 @@ abstract class XmltvElement
             foreach ($this->getAllowedChildren() as $child => $rules) {
                 if (ucfirst(strtolower(str_replace('-', '', $child))) == $called_child) {
                     array_unshift($arguments, $child);
-                    return call_user_func_array([ $this, 'addChild' ], $arguments);
+                    return call_user_func_array([ $this, '_addChild' ], $arguments);
                 }
             }
             throw new XmltvException(
@@ -105,7 +105,7 @@ abstract class XmltvElement
 
     public function validate()
     {
-        $this->attachChildren();
+        $this->_attachChildren();
 
         foreach ($this->children as $child) {
             $child->validate();
@@ -173,7 +173,7 @@ abstract class XmltvElement
         }
     }
 
-    public function setAttribute($name, $value = null)
+   protected function _setAttribute($name, $value = null)
     {
         if (!in_array($name, array_keys($this->getAllowedAttributes()))) {
             throw new XmltvException(
@@ -194,7 +194,7 @@ abstract class XmltvElement
         return $this;
     }
 
-    public function addChild(string $name, array $attributes = [], $value_or_callback = null)
+    protected function _addChild(string $name, array $attributes = [], $value_or_callback = null)
     {
         $childClass = get_called_class().'\\'.(ucfirst(strtolower(str_replace('-', '', $name))));
         $child      = new $childClass($attributes, $value_or_callback);
@@ -225,7 +225,7 @@ abstract class XmltvElement
         return Xmltv::getDocument()->saveXml($this->_xml);
     }
 
-    protected function attachChildren()
+    protected function _attachChildren()
     {
         // Remove all previously attached children, if any
         foreach ($this->children as $child) {
@@ -247,7 +247,7 @@ abstract class XmltvElement
 
         // Go down, recursively
         foreach ($this->children as $child) {
-            $child->attachChildren();
+            $child->_attachChildren();
         }
     }
 }
