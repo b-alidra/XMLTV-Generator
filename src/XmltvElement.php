@@ -171,7 +171,6 @@ abstract class XmltvElement
                 );
             }
         }
-
     }
 
     public function setAttribute($name, $value = null)
@@ -207,9 +206,7 @@ abstract class XmltvElement
 
     public function appendTo(\DomNode $parent)
     {
-        Xmltv::getDocument()->importNode($this->_xml);
         $parent->appendChild($this->_xml);
-
         $this->parent = $parent;
     }
 
@@ -217,12 +214,12 @@ abstract class XmltvElement
     {
         if ($this->parent) {
             $this->parent->removeChild($this->_xml);
+            $this->parent = null;
         }
     }
 
     public function toXml()
     {
-        $this->attachChildren();
         $this->validate();
 
         return Xmltv::getDocument()->saveXml($this->_xml);
