@@ -4,8 +4,14 @@ use XMLTV\XmltvElement;
 use XMLTV\Channel;
 use XMLTV\Programme;
 
+/**
+ * @coversDefaultClass XMLTV\Xmltv
+ */
 class Xmltv_Test extends PHPUnit_Framework_TestCase
 {
+    /**
+     * @var XMLTV\Xmltv
+     */
     protected $xmltv;
 
     protected function setUp()
@@ -18,14 +24,14 @@ class Xmltv_Test extends PHPUnit_Framework_TestCase
             ->setSourcedataurl('https://b-alidra.com/xmltv')
             ->setGeneratorinfoname('XMLTV')
             ->setGeneratorinfourl('https://b-alidra.com/xmltv')
-            ->addChannel([], function (&$channel) {
+            ->addChannel(function (&$channel) {
                 $channel
                     ->setId('test-channel')
                     ->addDisplayname(['lang' => 'fr'], 'La Une')
                     ->addDisplayname(['lang' => 'en'], 'The One')
                     ->addIcon(['width' => '80', 'height' => 120, 'src' => 'https://b-alidra.com/icon.png'])
                     ->addIcon(['width' => '80', 'height' => 120, 'src' => 'https://b-alidra.com/icon2.png'])
-                    ->addUrl([], 'https://b-alidra.com');
+                    ->addUrl('https://b-alidra.com');
             })
             ->addProgramme([
                 'channel'          => 'test-channel',
@@ -40,60 +46,60 @@ class Xmltv_Test extends PHPUnit_Framework_TestCase
                 $program
                     ->addTitle(['lang' => 'fr'], 'Chaine de test')
                     ->addTitle(['lang' => 'en'], 'Test channel')
-                    ->addSubtitle(['lang' => 'fr'], 'Second tilre de la chaine de test')
+                    ->addSubtitle(['lang' => 'fr'], 'Second titre de la chaine de test')
                     ->addSubtitle(['lang' => 'en'], 'Test channel second title')
                     ->addDesc(['lang' => 'fr'], 'Description de la chaine de test')
                     ->addDesc(['lang' => 'en'], 'Test channel description')
-                    ->addCredits([], function (&$credits) {
+                    ->addCredits(function (&$credits) {
                         $credits
-                            ->addActor([], 'Test actor')
-                            ->addAdapter([], 'Test adapter')
-                            ->addCommentator([], 'Test commentator')
-                            ->addComposer([], 'Test composer')
-                            ->addDirector([], 'Test director')
-                            ->addEditor([], 'Test editor')
-                            ->addGuest([], 'Test guest')
-                            ->addPresenter([], 'Test presenter')
-                            ->addProducer([], 'Test producer')
-                            ->addWriter([], 'Test writer');
+                            ->addActor('Test actor')
+                            ->addAdapter('Test adapter')
+                            ->addCommentator('Test commentator')
+                            ->addComposer('Test composer')
+                            ->addDirector('Test director')
+                            ->addEditor('Test editor')
+                            ->addGuest('Test guest')
+                            ->addPresenter('Test presenter')
+                            ->addProducer('Test producer')
+                            ->addWriter('Test writer');
                     })
-                    ->addDate([], '20160615')
+                    ->addDate('20160615')
                     ->addCategory(['lang' => 'fr'], 'Horreur')
                     ->addCategory(['lang' => 'en'], 'Horror')
                     ->addKeyword(['lang' => 'fr'], 'Fantastique')
                     ->addKeyword(['lang' => 'en'], 'Fantastic')
-                    ->addLanguage([], 'fr')
-                    ->addOriglanguage([], 'en')
+                    ->addLanguage('fr')
+                    ->addOriglanguage('en')
                     ->addLength(['units' => 'minutes'], 120)
                     ->addIcon(['src' => 'https://b-alidra.com/icon.png'])
-                    ->addUrl([], 'https://b-alidra.com')
-                    ->addCountry([], 'GB')
-                    ->addEpisodenum([], '0.0.0/1')
-                    ->addVideo([], function (&$video) {
+                    ->addUrl('https://b-alidra.com')
+                    ->addCountry('GB')
+                    ->addEpisodenum('0.0.0/1')
+                    ->addVideo(function (&$video) {
                         $video
-                            ->addAspect([], '')
-                            ->addColour([], '')
-                            ->addPresent([], 'yes')
-                            ->addQuality([], '');
+                            ->addAspect('')
+                            ->addColour('')
+                            ->addPresent('yes')
+                            ->addQuality('');
                     })
-                    ->addAudio([], function (&$audio) {
-                        $audio->addPresent([], 'yes');
+                    ->addAudio(function (&$audio) {
+                        $audio->addPresent('yes');
                     })
                     ->addPreviouslyshown([])
-                    ->addPremiere([], '')
-                    ->addLastchance([], '')
-                    //->add_new([], '')
-                    ->addSubtitles([], function (&$subtitles) {
-                        $subtitles->addLanguage([], 'English');
+                    ->addPremiere('')
+                    ->addLastchance('')
+                    //->add_new('')
+                    ->addSubtitles(function (&$subtitles) {
+                        $subtitles->addLanguage('English');
                     })
-                    ->addRating([], function (&$rating) {
+                    ->addRating(function (&$rating) {
                         $rating
-                            ->addValue([], '1/5')
+                            ->addValue('1/5')
                             ->addIcon(['src' => 'https://b-alidra.com/icon.png']);
                     })
-                    ->addStarrating([], function (&$starrating) {
+                    ->addStarrating(function (&$starrating) {
                         $starrating
-                            ->addValue([], '1/5')
+                            ->addValue('1/5')
                             ->addIcon(['src' => 'https://b-alidra.com/icon.png']);
                     })
                     ->addReview([
@@ -105,9 +111,17 @@ class Xmltv_Test extends PHPUnit_Framework_TestCase
             });
     }
 
-    public function testOutput()
+    public function testCallToRootElement()
     {
-            $expected = <<<EOF
+        $this->assertEquals('tv', $this->xmltv->getTagName());
+    }
+
+    /**
+     * @covers ::toXml
+     */
+    public function testToXml()
+    {
+        $expected = <<<EOF
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE tv PUBLIC "SYSTEM" "http://xmltv.cvs.sourceforge.net/viewvc/xmltv/xmltv/xmltv.dtd">
 <tv date="2016-12-26" source-info-url="https://b-alidra.com/xmltv" source-info-name="XMLTV" source-data-url="https://b-alidra.com/xmltv" generator-info-name="XMLTV" generator-info-url="https://b-alidra.com/xmltv">
@@ -121,7 +135,7 @@ class Xmltv_Test extends PHPUnit_Framework_TestCase
   <programme channel="test-channel" start="20161223184000" stop="20161223194000" pdc-start="20161223184000" vps-start="20161223184000" showview="???" videoplus="???" clumpidx="1">
     <title lang="fr">Chaine de test</title>
     <title lang="en">Test channel</title>
-    <sub-title lang="fr">Second tilre de la chaine de test</sub-title>
+    <sub-title lang="fr">Second titre de la chaine de test</sub-title>
     <sub-title lang="en">Test channel second title</sub-title>
     <desc lang="fr">Description de la chaine de test</desc>
     <desc lang="en">Test channel description</desc>
@@ -177,12 +191,14 @@ class Xmltv_Test extends PHPUnit_Framework_TestCase
 </tv>
 
 EOF;
-
         $this->assertEquals($expected, $this->xmltv->toXml());
     }
 
+    /**
+     * @covers ::validate
+     */
     public function testDTDValidation()
     {
-        $this->assertTrue($this->xmltv->validate());
+        $this->assertTrue($this->xmltv->validateDTD());
     }
 }

@@ -14,7 +14,7 @@ class Xmltv
     /**
      * @var \DomDocument
      */
-    protected static $document;
+    protected $_document;
 
     /**
      * @var XMLTV\Tv
@@ -23,34 +23,34 @@ class Xmltv
 
     public function __construct($attributes = [])
     {
-        $this->root = new Tv($attributes);
-        $this->root->appendTo(static::getDocument());
+        $this->_document = $this->_createDocument();
+        $this->root      = new Tv($this->_document, $attributes);
+
+        $this->root->appendTo($this->_document);
     }
 
-    public static function getDocument()
+    public function validateDTD()
     {
-        if (is_null(static::$document)) {
-            $implementation = new \DOMImplementation();
-            $dtd            = $implementation->createDocumentType('tv', 'SYSTEM', 'http://xmltv.cvs.sourceforge.net/viewvc/xmltv/xmltv/xmltv.dtd');
-            static::$document = $implementation->createDocument('', '', $dtd);
-
-            static::$document->encoding           = 'UTF-8';
-            static::$document->preserveWhiteSpace = false;
-            static::$document->formatOutput       = true;
-        }
-
-        return static::$document;
-    }
-
-    public function validate()
-    {
-        return static::getDocument()->validate();
+        return $this->_document->validate();
     }
 
     public function toXml()
     {
         $this->root->validate();
-        return static::getDocument()->saveXml();
+        return $this->_document->saveXml();
+    }
+
+    protected function _createDocument()
+    {
+        $implementation = new \DOMImplementation();
+        $dtd            = $implementation->createDocumentType('tv', 'SYSTEM', 'http://xmltv.cvs.sourceforge.net/viewvc/xmltv/xmltv/xmltv.dtd');
+        $document = $implementation->createDocument('', '', $dtd);
+
+        $document->encoding           = 'UTF-8';
+        $document->preserveWhiteSpace = false;
+        $document->formatOutput       = true;
+
+        return $document;
     }
 
     public function __call($name, $arguments)

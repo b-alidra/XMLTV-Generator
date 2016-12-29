@@ -3,7 +3,15 @@ use XMLTV\Xmltv;
 use XMLTV\XmltvElement;
 use XMLTV\Tv\Programme;
 
-class Programme_Test extends PHPUnit_Framework_TestCase {
+class Programme_Test extends PHPUnit_Framework_TestCase
+{
+    protected function setUp()
+    {
+        $xmltv = new Xmltv();
+        $xmltv->addProgramme(function (&$programme) {
+            $this->element = $programme;
+        });
+    }
 
     public function testOutput()
     {
