@@ -1,5 +1,5 @@
 <?php
-use XMLTV\Tv\Programme\Keyword;
+use XMLTV\Xmltv;
 
 require_once(dirname(__FILE__) . '/../../XmltvElementTestCase.php');
 
@@ -10,7 +10,12 @@ class ProgrammeKeyword_Test extends Xmltv_Element_TestCase
 {
     protected function setUp()
     {
-        $this->element = new Keyword();
+        $xmltv = new Xmltv();
+        $xmltv->addProgramme(function (&$programme) {
+            $programme->addKeyword(function (&$keyword) {
+                $this->element = $keyword;
+            });
+        });
     }
 
     /**

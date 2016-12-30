@@ -1,5 +1,5 @@
 <?php
-use XMLTV\Tv\Programme\Video\Colour;
+use XMLTV\Xmltv;
 
 require_once(dirname(__FILE__) . '/../../../XmltvElementTestCase.php');
 
@@ -10,7 +10,14 @@ class VideoColour_Test extends Xmltv_Element_TestCase
 {
     protected function setUp()
     {
-        $this->element = new Colour();
+        $xmltv = new Xmltv();
+        $xmltv->addProgramme(function (&$programme) {
+            $programme->addVideo(function (&$video) {
+                $video->addColour(function (&$colour) {
+                    $this->element = $colour;
+                });
+            });
+        });
     }
 
     /**

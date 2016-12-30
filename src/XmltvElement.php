@@ -2,7 +2,9 @@
 namespace XMLTV;
 
 /**
- * XMLTV generator
+ * XMLTV Element
+ *
+ * Represents an element in the XMLTV DTD
  *
  * @see http://wiki.xmltv.org/index.php/XMLTVFormat
  *
@@ -31,24 +33,49 @@ abstract class XmltvElement
      */
     protected $children;
 
+    /**
+     * Constants used to define rules for each tag attribute and child
+     */
     const ALLOWED  = 0x01;
     const REQUIRED = 0x02;
     const SINGLE   = 0x04;
 
+    /**
+     * Return the element tag name
+     *
+     * @abstract
+     * @return string The element tag name
+     */
     abstract public function getTagName();
+
+    /**
+     * Return the allowed attributes for this element
+     *
+     * @return array An array containing allowed attributes.
+     *                For each attribute (key), define the presence rules using
+     *                ::ALLOWED, ::SINGLE and ::REQUIRED.
+     */
     abstract public function getAllowedAttributes();
+
+    /**
+     * Return the allowed children for this element
+     *
+     * @return array An array containing allowed children.
+     *                For each child (key), define the presence rules using
+     *                ::ALLOWED, ::SINGLE and ::REQUIRED.
+     */
     abstract public function getAllowedChildren();
 
     /**
      * Constructor
      *
-     * @param \DomDocument $document: The document this element will be attached to
+     * @param \DomDocument $document The document this element will be attached to
      *
-     * @param array $attributes: Array of attributes as $name => $value
+     * @param array $attributes Array of attributes as $name => $value
      *
-     * @param string $value: The element value
+     * @param string $value The element value
      *
-     * @param callable $callback: Callback function which receives the new
+     * @param callable $callback Callback function which receives the new
      *                            created element as argument
      */
     public function __construct(\DomDocument $document, $attributes = [], $value = null, $callback = null)
@@ -71,12 +98,20 @@ abstract class XmltvElement
         }
     }
 
+    /**
+     * Attach this element to a Dom node
+     *
+     * @param \DomNode $parent The noe to attach the element to
+     */
     public function appendTo(\DomNode $parent)
     {
         $parent->appendChild($this->_xml);
         $this->parent = $parent;
     }
 
+    /**
+     * Detach this element from his parent, if any
+     */
     public function remove()
     {
         if ($this->parent) {
@@ -85,15 +120,19 @@ abstract class XmltvElement
         }
     }
 
+    /**
+     * Set one of this element attributes
+     *
+     * @param string $name The attribute name
+     *
+     * @param string $value The attribute value
+     *
+     * @throws \XMLTV\XmltvException if this attribute already exists
+     *
+     * @return \XMLTV\XmltvElement
+     */
     protected function _setAttribute($name, $value = null)
     {
-        if (!in_array($name, array_keys($this->getAllowedAttributes()))) {
-            throw new XmltvException(
-                sprintf(XmltvException::UNSUPPORTED_ATTRIBUTE_ERROR_MESSAGE, get_called_class(), $name),
-                XmltvException::UNSUPPORTED_ATTRIBUTE_ERROR_CODE
-            );
-        }
-
         if ($this->_xml->hasAttribute($name)) {
             throw new XmltvException(
                 sprintf(XmltvException::MULTIPLE_ATTRIBUTE_ERROR_MESSAGE, get_called_class(), $name),
@@ -106,6 +145,15 @@ abstract class XmltvElement
         return $this;
     }
 
+    /**
+     * Add a child to this element
+     *
+     * @param string $name The child tag name
+     *
+     * @param mixed $args The child attributes and/or value and/or callback function
+     *
+     * @return \XMLTV\XmltvElement
+     */
     protected function _addChild(string $name, $args = null)
     {
         $childClass = get_called_class().'\\'.(ucfirst(strtolower(str_replace('-', '', $name))));
@@ -137,9 +185,16 @@ abstract class XmltvElement
         return $this;
     }
 
+    /**
+     * Attach all this element children
+     */
     protected function _attachChildren()
     {
         // Remove all previously attached children, if any
+        if (empty($this->children)) {
+            return false;
+        }
+
         foreach ($this->children as $child) {
             $child->remove();
         }
@@ -163,27 +218,18 @@ abstract class XmltvElement
         }
     }
 
+    /**
+     * Call the internal validation
+     *
+     * @throws \XMLTV\XmltvException if the validation fails
+     */
     public function validate()
     {
         $this->_attachChildren();
 
-        foreach ($this->children as $child) {
-            $child->validate();
-        }
-
-        // Check unsupported attributes
-        if ($this->_xml->hasAttributes()) {
-            foreach ($this->_xml->attributes as $name => $value) {
-                if (!in_array($name, array_keys($this->getAllowedAttributes()))) {
-                    throw new XmltvException(
-                        sprintf(
-                            XmltvException::UNSUPPORTED_ATTRIBUTE_ERROR_MESSAGE,
-                            get_called_class(),
-                            $name
-                        ),
-                        XmltvException::UNSUPPORTED_ATTRIBUTE_ERROR_CODE
-                    );
-                }
+        if (!empty($this->children)) {
+            foreach ($this->children as $child) {
+                $child->validate();
             }
         }
 
@@ -201,18 +247,6 @@ abstract class XmltvElement
             }
         }
 
-        // Check unsupported children
-        if (!empty($this->children)) {
-            foreach ($this->children as $child) {
-                if (!in_array($child->getTagName(), array_keys($this->getAllowedChildren()))) {
-                    throw new XmltvException(
-                        sprintf(XmltvException::UNSUPPORTED_CHILD_ERROR_MESSAGE, get_called_class(), $child->getTagName()),
-                        XmltvException::UNSUPPORTED_CHILD_ERROR_CODE
-                    );
-                }
-            }
-        }
-
         // Check missing required children and single children
         foreach ($this->getAllowedChildren() as $name => $rules) {
             $xpath    = new \DOMXPath($this->_document);
@@ -224,7 +258,7 @@ abstract class XmltvElement
                 );
             }
 
-            if (count($children) > 1 && ($rules & static::SINGLE)) {
+            if ($children->length > 1 && ($rules & static::SINGLE)) {
                 throw new XmltvException(
                     sprintf(XmltvException::MULTIPLE_CHILD_ERROR_MESSAGE, get_called_class(), $name),
                     XmltvException::MULTIPLE_CHILD_ERROR_CODE
@@ -233,6 +267,17 @@ abstract class XmltvElement
         }
     }
 
+    /**
+     * Magic method to handle add* and set* calls
+     *
+     * Attributes setters are in the following form:
+     *  set[ucfirst(strtolower(str_replace('-', '', $attribute_name))]($value)
+     *
+     * Children setters are in the following form:
+     *  add[ucfirst(strtolower(str_replace('-', '', $child_tag_name))]($args)
+     *
+     * @throws \XMLTV\XmltvException if the call is not in a valid form
+     */
     public function __call($name, $arguments)
     {
         // Attribute setter
@@ -246,11 +291,11 @@ abstract class XmltvElement
             }
             throw new XmltvException(
                 sprintf(
-                    XmltvException::UNKNOWN_ATTRIBUTE_ERROR_MESSAGE,
+                    XmltvException::UNSUPPORTED_ATTRIBUTE_ERROR_MESSAGE,
                     get_called_class(),
                     $called_attribute
                 ),
-                XmltvException::UNKNOWN_ATTRIBUTE_ERROR_CODE
+                XmltvException::UNSUPPORTED_ATTRIBUTE_ERROR_CODE
             );
         }
         // Method to add a child
@@ -264,11 +309,11 @@ abstract class XmltvElement
             }
             throw new XmltvException(
                 sprintf(
-                    XmltvException::UNKNOWN_CHILD_ERROR_MESSAGE,
+                    XmltvException::UNSUPPORTED_CHILD_ERROR_MESSAGE,
                     get_called_class(),
                     $called_child
                 ),
-                XmltvException::UNKNOWN_CHILD_ERROR_CODE
+                XmltvException::UNSUPPORTED_CHILD_ERROR_CODE
             );
         }
         // Unknown method

@@ -1,5 +1,5 @@
 <?php
-use XMLTV\Tv\Programme\Lastchance;
+use XMLTV\Xmltv;
 
 require_once(dirname(__FILE__) . '/../../XmltvElementTestCase.php');
 
@@ -10,7 +10,12 @@ class ProgrammeLastchance_Test extends Xmltv_Element_TestCase
 {
     protected function setUp()
     {
-        $this->element = new Lastchance();
+        $xmltv = new Xmltv();
+        $xmltv->addProgramme(function (&$programme) {
+            $programme->addLastchance(function (&$last_chance) {
+                $this->element = $last_chance;
+            });
+        });
     }
 
     /**

@@ -1,5 +1,5 @@
 <?php
-use XMLTV\Tv\Programme\Length;
+use XMLTV\Xmltv;
 
 require_once(dirname(__FILE__) . '/../../XmltvElementTestCase.php');
 
@@ -10,7 +10,12 @@ class ProgrammeLength_Test extends Xmltv_Element_TestCase
 {
     protected function setUp()
     {
-        $this->element = new Length();
+        $xmltv = new Xmltv();
+        $xmltv->addProgramme(function (&$programme) {
+            $programme->addLength(function (&$length) {
+                $this->element = $length;
+            });
+        });
     }
 
     /**

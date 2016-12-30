@@ -1,5 +1,5 @@
 <?php
-use XMLTV\Tv\Channel\Displayname;
+use XMLTV\Xmltv;
 
 require_once(dirname(__FILE__) . '/../../XmltvElementTestCase.php');
 
@@ -10,7 +10,12 @@ class ChannelDisplayname_Test extends Xmltv_Element_TestCase
 {
     protected function setUp()
     {
-        $this->element = new Displayname();
+        $xmltv = new Xmltv();
+        $xmltv->addChannel(function (&$channel) {
+            $channel->addDisplayname(function (&$dn) {
+                $this->element = $dn;
+            });
+        });
     }
 
     /**

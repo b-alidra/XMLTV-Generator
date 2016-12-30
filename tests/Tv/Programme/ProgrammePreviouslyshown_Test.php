@@ -1,5 +1,5 @@
 <?php
-use XMLTV\Tv\Programme\Previouslyshown;
+use XMLTV\Xmltv;
 
 require_once(dirname(__FILE__) . '/../../XmltvElementTestCase.php');
 
@@ -10,7 +10,12 @@ class ProgrammePreviouslyshown_Test extends Xmltv_Element_TestCase
 {
     protected function setUp()
     {
-        $this->element = new Previouslyshown();
+        $xmltv = new Xmltv();
+        $xmltv->addProgramme(function (&$programme) {
+            $programme->addPreviouslyshown(function (&$previously_shown) {
+                $this->element = $previously_shown;
+            });
+        });
     }
 
     /**

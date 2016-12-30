@@ -1,5 +1,5 @@
 <?php
-use XMLTV\Tv\Programme\Country;
+use XMLTV\Xmltv;
 
 require_once(dirname(__FILE__) . '/../../XmltvElementTestCase.php');
 
@@ -10,7 +10,12 @@ class ProgrammeCountry_Test extends Xmltv_Element_TestCase
 {
     protected function setUp()
     {
-        $this->element = new Country();
+        $xmltv = new Xmltv();
+        $xmltv->addProgramme(function (&$programme) {
+            $programme->addCountry(function (&$country) {
+                $this->element = $country;
+            });
+        });
     }
 
     /**

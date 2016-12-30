@@ -4,18 +4,35 @@ namespace XMLTV;
 /**
  * XMLTV tv
  *
+ * Represents the tv root element in the DTD
+ *
  * @see http://wiki.xmltv.org/index.php/XMLTVFormat
  *
  * @author
  *   Belkacem Alidra <dev@b-alidra.com>
+ *
+ * @method \XMLTV\XmltvElement setDate(string $value)
+ * @method \XMLTV\XmltvElement setSourceinfourl(string $source_info_url)
+ * @method \XMLTV\XmltvElement setSourceinfoname(string $source_info_name)
+ * @method \XMLTV\XmltvElement setSourceDataUrl(string $source_data_url)
+ * @method \XMLTV\XmltvElement setGeneratorinfoname(string $generator_info_name)
+ * @method \XMLTV\XmltvElement setGeneratorinfourl(string $generator_info_url)
+ * @method \XMLTV\XmltvElement addChannel(array $attributes, string $value, callable $callback)
+ * @method \XMLTV\XmltvElement addProgramme(array $attributes, string $value, callable $callback)
  */
 class Tv extends XmltvElement
 {
+    /**
+     * @see \XMLTV\XmltvElement::getTagName
+     */
     public function getTagName()
     {
         return 'tv';
     }
 
+    /**
+     * @see \XMLTV\XmltvElement::getAllowedAttributes
+     */
     public function getAllowedAttributes()
     {
         return [
@@ -28,6 +45,9 @@ class Tv extends XmltvElement
         ];
     }
 
+    /**
+     * @see \XMLTV\XmltvElement::getAllowedChildren
+     */
     public function getAllowedChildren()
     {
         return [

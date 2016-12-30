@@ -1,5 +1,5 @@
 <?php
-use XMLTV\Tv\Programme\Credits\Actor;
+use XMLTV\Xmltv;
 
 require_once(dirname(__FILE__) . '/../../../XmltvElementTestCase.php');
 
@@ -10,7 +10,14 @@ class ProgrammeActor_Test extends Xmltv_Element_TestCase
 {
     protected function setUp()
     {
-        $this->element = new Actor();
+        $xmltv = new Xmltv();
+        $xmltv->addProgramme(function (&$programme) {
+            $programme->addCredits(function (&$credits) {
+                $credits->addActor(function (&$actor) {
+                    $this->element = $actor;
+                });
+            });
+        });
     }
 
     /**

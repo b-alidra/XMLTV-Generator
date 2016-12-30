@@ -1,5 +1,5 @@
 <?php
-use XMLTV\Tv\Programme\Url;
+use XMLTV\Xmltv;
 
 require_once(dirname(__FILE__) . '/../../XmltvElementTestCase.php');
 
@@ -10,7 +10,12 @@ class ProgrammeUrl_Test extends Xmltv_Element_TestCase
 {
     protected function setUp()
     {
-        $this->element = new Url();
+        $xmltv = new Xmltv();
+        $xmltv->addProgramme(function (&$programme) {
+            $programme->addUrl(function (&$url) {
+                $this->element = $url;
+            });
+        });
     }
 
     /**

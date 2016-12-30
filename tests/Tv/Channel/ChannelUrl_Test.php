@@ -1,16 +1,21 @@
 <?php
-use XMLTV\Tv\Channel\Url;
+use XMLTV\Xmltv;
 
 require_once(dirname(__FILE__) . '/../../XmltvElementTestCase.php');
 
 /**
  * @coversDefaultClass \XMLTV\Tv\Channel\Url
  */
-class Url_Test extends Xmltv_Element_TestCase
+class ChannelUrl_Test extends Xmltv_Element_TestCase
 {
     protected function setUp()
     {
-        $this->element = new Url();
+        $xmltv = new Xmltv();
+        $xmltv->addChannel(function (&$channel) {
+            $channel->addUrl(function (&$url) {
+                $this->element = $url;
+            });
+        });
     }
 
     /**

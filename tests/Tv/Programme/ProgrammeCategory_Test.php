@@ -1,5 +1,5 @@
 <?php
-use XMLTV\Tv\Programme\Category;
+use XMLTV\Xmltv;
 
 require_once(dirname(__FILE__) . '/../../XmltvElementTestCase.php');
 
@@ -10,7 +10,12 @@ class ProgrammeCategory_Test extends Xmltv_Element_TestCase
 {
     protected function setUp()
     {
-        $this->element = new Category();
+        $xmltv = new Xmltv();
+        $xmltv->addProgramme(function (&$programme) {
+            $programme->addCategory(function (&$category) {
+                $this->element = $category;
+            });
+        });
     }
 
     /**

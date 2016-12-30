@@ -1,5 +1,5 @@
 <?php
-use XMLTV\Tv\Programme\Video\Present;
+use XMLTV\Xmltv;
 
 require_once(dirname(__FILE__) . '/../../../XmltvElementTestCase.php');
 
@@ -10,7 +10,14 @@ class VideoPresent_Test extends Xmltv_Element_TestCase
 {
     protected function setUp()
     {
-        $this->element = new Present();
+        $xmltv = new Xmltv();
+        $xmltv->addProgramme(function (&$programme) {
+            $programme->addVideo(function (&$video) {
+                $video->addPresent(function (&$present) {
+                    $this->element = $present;
+                });
+            });
+        });
     }
 
     /**

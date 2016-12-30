@@ -1,5 +1,5 @@
 <?php
-use XMLTV\Tv\Programme\Origlanguage;
+use XMLTV\Xmltv;
 
 require_once(dirname(__FILE__) . '/../../XmltvElementTestCase.php');
 
@@ -10,7 +10,12 @@ class ProgrammeOriglanguage_Test extends Xmltv_Element_TestCase
 {
     protected function setUp()
     {
-        $this->element = new Origlanguage();
+        $xmltv = new Xmltv();
+        $xmltv->addProgramme(function (&$programme) {
+            $programme->addOriglanguage(function (&$orig_language) {
+                $this->element = $orig_language;
+            });
+        });
     }
 
     /**

@@ -195,7 +195,7 @@ EOF;
     }
 
     /**
-     * @covers ::validate
+     * @covers ::validateDTD
      */
     public function testDTDValidation()
     {

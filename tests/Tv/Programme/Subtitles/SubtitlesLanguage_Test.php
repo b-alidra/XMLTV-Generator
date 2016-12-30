@@ -1,5 +1,5 @@
 <?php
-use XMLTV\Tv\Programme\Subtitles\Language;
+use XMLTV\Xmltv;
 
 require_once(dirname(__FILE__) . '/../../../XmltvElementTestCase.php');
 
@@ -10,7 +10,14 @@ class SubtitlesLanguage_Test extends Xmltv_Element_TestCase
 {
     protected function setUp()
     {
-        $this->element = new Language();
+        $xmltv = new Xmltv();
+        $xmltv->addProgramme(function (&$programme) {
+            $programme->addSubtitles(function (&$subtitles) {
+                $subtitles->addLanguage(function (&$language) {
+                    $this->element = $language;
+                });
+            });
+        });
     }
 
     /**

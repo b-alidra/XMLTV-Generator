@@ -1,9 +1,11 @@
 <?php
 use XMLTV\Xmltv;
-use XMLTV\Tv\Channel;
 
 require_once(dirname(__FILE__) . '/../XmltvElementTestCase.php');
 
+/**
+ * @coversDefaultClass \XMLTV\Tv\Channel
+ */
 class Channel_Test extends Xmltv_Element_TestCase
 {
     protected function setUp()

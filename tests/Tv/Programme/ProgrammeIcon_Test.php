@@ -1,5 +1,5 @@
 <?php
-use XMLTV\Tv\Programme\Icon;
+use XMLTV\Xmltv;
 
 require_once(dirname(__FILE__) . '/../../XmltvElementTestCase.php');
 
@@ -10,7 +10,12 @@ class ProgrammeIcon_Test extends Xmltv_Element_TestCase
 {
     protected function setUp()
     {
-        $this->element = new Icon();
+        $xmltv = new Xmltv();
+        $xmltv->addProgramme(function (&$programme) {
+            $programme->addIcon(function (&$icon) {
+                $this->element = $icon;
+            });
+        });
     }
 
     /**

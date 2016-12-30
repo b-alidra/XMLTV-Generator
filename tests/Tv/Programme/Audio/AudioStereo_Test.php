@@ -1,5 +1,5 @@
 <?php
-use XMLTV\Tv\Programme\Audio\Stereo;
+use XMLTV\Xmltv;
 
 require_once(dirname(__FILE__) . '/../../../XmltvElementTestCase.php');
 
@@ -10,7 +10,14 @@ class ProgrammeStereo_Test extends Xmltv_Element_TestCase
 {
     protected function setUp()
     {
-        $this->element = new Stereo();
+        $xmltv = new Xmltv();
+        $xmltv->addProgramme(function (&$programme) {
+            $programme->addAudio(function (&$audio) {
+                $audio->addStereo(function (&$stereo) {
+                    $this->element = $stereo;
+                });
+            });
+        });
     }
 
     /**

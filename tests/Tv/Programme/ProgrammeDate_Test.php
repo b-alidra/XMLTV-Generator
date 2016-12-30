@@ -1,5 +1,5 @@
 <?php
-use XMLTV\Tv\Programme\Date;
+use XMLTV\Xmltv;
 
 require_once(dirname(__FILE__) . '/../../XmltvElementTestCase.php');
 
@@ -10,7 +10,12 @@ class ProgrammeDate_Test extends Xmltv_Element_TestCase
 {
     protected function setUp()
     {
-        $this->element = new Date();
+        $xmltv = new Xmltv();
+        $xmltv->addProgramme(function (&$programme) {
+            $programme->addDate(function (&$date) {
+                $this->element = $date;
+            });
+        });
     }
 
     /**

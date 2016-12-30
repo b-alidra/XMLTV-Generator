@@ -1,5 +1,5 @@
 <?php
-use XMLTV\Tv\Programme\Starrating;
+use XMLTV\Xmltv;
 
 require_once(dirname(__FILE__) . '/../../XmltvElementTestCase.php');
 
@@ -10,7 +10,12 @@ class ProgrammeStarrating_Test extends Xmltv_Element_TestCase
 {
     protected function setUp()
     {
-        $this->element = new Starrating();
+        $xmltv = new Xmltv();
+        $xmltv->addProgramme(function (&$programme) {
+            $programme->addStarrating(function (&$star_rating) {
+                $this->element = $star_rating;
+            });
+        });
     }
 
     /**

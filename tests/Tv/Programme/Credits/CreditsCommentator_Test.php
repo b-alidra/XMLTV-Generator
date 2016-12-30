@@ -1,5 +1,5 @@
 <?php
-use XMLTV\Tv\Programme\Credits\Commentator;
+use XMLTV\Xmltv;
 
 require_once(dirname(__FILE__) . '/../../../XmltvElementTestCase.php');
 
@@ -10,7 +10,14 @@ class ProgrammeCommentator_Test extends Xmltv_Element_TestCase
 {
     protected function setUp()
     {
-        $this->element = new Commentator();
+        $xmltv = new Xmltv();
+        $xmltv->addProgramme(function (&$programme) {
+            $programme->addCredits(function (&$credits) {
+                $credits->addCommentator(function (&$commentator) {
+                    $this->element = $commentator;
+                });
+            });
+        });
     }
 
     /**

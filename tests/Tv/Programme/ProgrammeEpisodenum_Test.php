@@ -1,5 +1,5 @@
 <?php
-use XMLTV\Tv\Programme\Episodenum;
+use XMLTV\Xmltv;
 
 require_once(dirname(__FILE__) . '/../../XmltvElementTestCase.php');
 
@@ -10,7 +10,12 @@ class ProgrammeEpisodenum_Test extends Xmltv_Element_TestCase
 {
     protected function setUp()
     {
-        $this->element = new Episodenum();
+        $xmltv = new Xmltv();
+        $xmltv->addProgramme(function (&$programme) {
+            $programme->addEpisodenum(function (&$episode_num) {
+                $this->element = $episode_num;
+            });
+        });
     }
 
     /**

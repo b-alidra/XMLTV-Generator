@@ -1,5 +1,5 @@
 <?php
-use XMLTV\Tv\Programme\Rating\Value;
+use XMLTV\Xmltv;
 
 require_once(dirname(__FILE__) . '/../../../XmltvElementTestCase.php');
 
@@ -10,7 +10,14 @@ class RatingValue_Test extends Xmltv_Element_TestCase
 {
     protected function setUp()
     {
-        $this->element = new Value();
+        $xmltv = new Xmltv();
+        $xmltv->addProgramme(function (&$programme) {
+            $programme->addRating(function (&$rating) {
+                $rating->addValue(function (&$value) {
+                    $this->element = $value;
+                });
+            });
+        });
     }
 
     /**

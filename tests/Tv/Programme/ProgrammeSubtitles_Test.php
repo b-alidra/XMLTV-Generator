@@ -1,5 +1,5 @@
 <?php
-use XMLTV\Tv\Programme\Subtitles;
+use XMLTV\Xmltv;
 
 require_once(dirname(__FILE__) . '/../../XmltvElementTestCase.php');
 
@@ -10,7 +10,12 @@ class ProgrammeSubtitles_Test extends Xmltv_Element_TestCase
 {
     protected function setUp()
     {
-        $this->element = new Subtitles();
+        $xmltv = new Xmltv();
+        $xmltv->addProgramme(function (&$programme) {
+            $programme->addSubtitles(function (&$subtitles) {
+                $this->element = $subtitles;
+            });
+        });
     }
 
     /**
