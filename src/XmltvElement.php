@@ -154,7 +154,7 @@ abstract class XmltvElement
      *
      * @return \XMLTV\XmltvElement
      */
-    protected function _addChild(string $name, $args = null)
+    protected function _addChild($name, $args = null)
     {
         $childClass = get_called_class().'\\'.(ucfirst(strtolower(str_replace('-', '', $name))));
 
