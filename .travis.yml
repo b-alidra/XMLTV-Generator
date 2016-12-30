@@ -8,4 +8,8 @@ php:
 before_install:
     - sudo apt-get -qq update
     - sudo apt-get install -y libxml2-dev
-install: composer install
+script:
+    - mkdir -p build/logs
+    - php vendor/bin/phpunit -c phpunit.xml
+after_success:
+    - travis_rerty php vendor/bin/coveralls -v

@@ -10,7 +10,9 @@
         }
     ],
     "version": "0.1.0",
-    "require": {},
+    "require": {
+        "satooshi/php-coveralls": "^1.0"
+    },
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require-dev": {
