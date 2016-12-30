@@ -67,6 +67,55 @@ abstract class XmltvElement
     abstract public function getAllowedChildren();
 
     /**
+     * Check if the provided value (text content)
+     * is valid for this element.
+     *
+     * By default, authorize any string value.
+     * Should be overridden for specific cases.
+     *
+     * @throws \XMLTV\XmltvException if the value is not valid
+     */
+    public function checkValue($value)
+    {
+        if (!is_scalar($value)) {
+            throw new XmltvException(
+                sprintf(XmltvException::UNSUPPORTED_VALUE_ERROR_MESSAGE, get_called_class()),
+                XmltvException::UNSUPPORTED_VALUE_ERROR_CODE
+            );
+        }
+    }
+
+    /**
+     * Check if the provided value is valid for the attribute.
+     *
+     * By default, authorize any string value for supported attributes.
+     * Should be overridden for specific cases.
+     *
+     * @param string $attribute The attribute to check
+     *
+     * @param string $value The value to check
+     *
+     * @throws \XMLTV\XmltvException if this attribute already exists
+     *                               or the value is not valid
+     */
+    public function checkAttributeValue($attribute, $value)
+    {
+        if ($this->_xml->hasAttribute($attribute)) {
+            throw new XmltvException(
+                sprintf(XmltvException::MULTIPLE_ATTRIBUTE_ERROR_MESSAGE, get_called_class(), $attribute),
+                XmltvException::MULTIPLE_ATTRIBUTE_ERROR_CODE
+            );
+        }
+
+        if (!is_scalar($value)) {
+            throw new XmltvException(
+                sprintf(XmltvException::UNSUPPORTED_VALUE_ERROR_MESSAGE, get_called_class(), $attribute),
+                XmltvException::UNSUPPORTED_VALUE_ERROR_CODE
+            );
+        }
+    }
+
+    /**
      * Constructor
      *
      * @param \DomDocument $document The document this element will be attached to
@@ -90,7 +139,7 @@ abstract class XmltvElement
         }
 
         if (!empty($value)) {
-            $this->_xml->appendChild($this->_document->createTextNode($value));
+            $this->_setValue($value);
         }
 
         if (is_callable($callback)) {
@@ -127,20 +176,31 @@ abstract class XmltvElement
      *
      * @param string $value The attribute value
      *
-     * @throws \XMLTV\XmltvException if this attribute already exists
+     * @throws \XMLTV\XmltvException if the attribute already exists
      *
      * @return \XMLTV\XmltvElement
      */
     protected function _setAttribute($name, $value = null)
     {
-        if ($this->_xml->hasAttribute($name)) {
-            throw new XmltvException(
-                sprintf(XmltvException::MULTIPLE_ATTRIBUTE_ERROR_MESSAGE, get_called_class(), $name),
-                XmltvException::MULTIPLE_ATTRIBUTE_ERROR_CODE
-            );
-        }
-
+        $this->checkAttributeValue($name, $value);
         $this->_xml->setAttribute($name, $value);
+
+        return $this;
+    }
+
+    /**
+     * Set this element text value
+     *
+     * @param string $value The text value
+     *
+     * @throws \XMLTV\XmltvException if the value is not valid
+     *
+     * @return \XMLTV\XmltvElement
+     */
+    protected function _setValue($value)
+    {
+        $this->checkValue($value);
+        $this->_xml->appendChild($this->_document->createTextNode($value));
 
         return $this;
     }

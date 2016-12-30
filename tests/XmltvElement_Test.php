@@ -10,9 +10,25 @@ use XMLTV\Tv\Channel;
 class XmltvElement_Test extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @covers ::_setAttribute
+     * @covers ::checkValue
      */
-    public function testSettingMultipleAttribute()
+    public function testCheckNotScalarValue()
+    {
+        $xmltv = new Xmltv();
+        $xmltv->addChannel(function (&$channel) {
+
+            $this->expectException('\XMLTV\XmltvException');
+            $this->expectExceptionCode(\XMLTV\XmltvException::UNSUPPORTED_VALUE_ERROR_CODE);
+            $this->expectExceptionMessage(sprintf(XmltvException::UNSUPPORTED_VALUE_ERROR_MESSAGE, get_class($channel)));
+
+            $channel->checkValue([]);
+        });
+    }
+
+    /**
+     * @covers ::checkAttributeValue
+     */
+    public function testCheckMultipleAttribute()
     {
         $stub = $this->getMockBuilder('\XMLTV\Tv\Channel')
             ->setConstructorArgs([new \DomDocument()])
@@ -28,7 +44,28 @@ class XmltvElement_Test extends \PHPUnit_Framework_TestCase
         $this->expectExceptionMessage(sprintf(XmltvException::MULTIPLE_ATTRIBUTE_ERROR_MESSAGE, get_class($stub), 'id'));
 
         $stub->setId('test-id');
-        $stub->setId('test-id');
+        $stub->checkAttributeValue('id', 'test-id');
+    }
+
+    /**
+     * @covers ::checkAttributeValue
+     */
+    public function testCheckNonScalarAttribute()
+    {
+        $stub = $this->getMockBuilder('\XMLTV\Tv\Channel')
+            ->setConstructorArgs([new \DomDocument()])
+            ->setMethods(['getAllowedAttributes'])
+            ->getMock();
+
+        $stub->expects($this->any())
+             ->method('getAllowedAttributes')
+             ->will($this->returnValue(['id' => XmltvElement::ALLOWED]));
+
+        $this->expectException('\XMLTV\XmltvException');
+        $this->expectExceptionCode(\XMLTV\XmltvException::UNSUPPORTED_VALUE_ERROR_CODE);
+        $this->expectExceptionMessage(sprintf(XmltvException::UNSUPPORTED_VALUE_ERROR_MESSAGE, get_class($stub)));
+
+        $stub->checkAttributeValue('id', new stdClass());
     }
 
     /**
