@@ -192,6 +192,7 @@ class Xmltv_Test extends PHPUnit_Framework_TestCase
 
 EOF;
         $this->assertEquals($expected, $this->xmltv->toXml());
+        $this->assertEquals($expected, $this->xmltv->toXml(true));
     }
 
     /**
