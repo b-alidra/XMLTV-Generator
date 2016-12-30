@@ -10,14 +10,12 @@
         }
     ],
     "version": "0.1.0",
-    "require": {
-        "satooshi/php-coveralls": "^1.0"
-    },
+    "require": { },
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require-dev": {
         "phpunit/phpunit": "^5.7",
-         "phpdocumentor/phpdocumentor": "*@dev"
+        "satooshi/php-coveralls": "^1.0"
     },
     "autoload": {
         "psr-4": { "XMLTV\\": "src" }
