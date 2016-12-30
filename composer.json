@@ -9,6 +9,7 @@
             "email": "dev@b-alidra.com"
         }
     ],
+    "version": "0.1.0",
     "require": {},
     "minimum-stability": "dev",
     "prefer-stable": true,
