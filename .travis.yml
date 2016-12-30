@@ -5,4 +5,7 @@ php:
   - '7.1'
   - hhvm
   - nightly
+before_install:
+    - sudo apt-get -qq update
+    - sudo apt-get install -y libxml2-dev
 install: composer install
