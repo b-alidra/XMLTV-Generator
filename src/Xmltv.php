@@ -104,8 +104,6 @@ class Xmltv
      */
     public function __call($name, $arguments)
     {
-        if (!method_exists($this, $name)) {
-            return call_user_func_array([$this->root, $name], $arguments);
-        }
+        return call_user_func_array([$this->root, $name], $arguments);
     }
 }
