@@ -1,17 +1,19 @@
 
 [![Build Status](https://travis-ci.org/b-alidra/XMLTV-Generator.svg?branch=master)](https://travis-ci.org/b-alidra/XMLTV-Generator)
 [![Coverage Status](https://coveralls.io/repos/github/b-alidra/XMLTV-Generator/badge.svg?branch=master)](https://coveralls.io/github/b-alidra/XMLTV-Generator?branch=master)
+[![StyleCI](https://styleci.io/repos/77653136/shield?branch=master)](https://styleci.io/repos/77653136)
 
 # XMLTV Generator
 
-PHP generator of XMLTV files, respecting the [XMLTV Format](http://xmltv.cvs.sourceforge.net/viewvc/xmltv/xmltv/xmltv.dtd).
+[XMLTV Format](http://xmltv.cvs.sourceforge.net/viewvc/xmltv/xmltv/xmltv.dtd) PHP generator.
 
 ## Requirements:
 
 - PHP 5.6
+- libxml
 
 ## Installation:
--------------
+
 The library is [PSR-4 compliant](http://www.php-fig.org/psr/psr-4)
  and the simplest way to install it is via composer:
 
@@ -26,7 +28,7 @@ The library is [PSR-4 compliant](http://www.php-fig.org/psr/psr-4)
 $xmltv = new XMLTV();
 ```
 
-### Set the document root node ttributes
+### Set the document root node ttributes (optional)
 
 ```php
 $xmltv
@@ -43,7 +45,9 @@ $xmltv
 ```php
 $xmltv->addChannel(function (&$channel) {
     $channel
+        // Required attribute
         ->setId('test-channel')
+        // Optional children
         ->addDisplayname(['lang' => 'en'], 'The One')
         ->addIcon(['width' => '80', 'height' => 120, 'src' => 'https://b-alidra.com/icon.png'])
         ->addUrl('https://b-alidra.com');;
@@ -54,8 +58,10 @@ $xmltv->addChannel(function (&$channel) {
 
 ```php
 $xmltv->addProgramme([
+        // Required attributes
         'channel'          => 'test-channel',
         'start'            => '20161223184000',
+        // Optional attributes
         'stop'             => '20161223194000',
         'pdc-start'        => '20161223184000',
         'vps-start'        => '20161223184000',
@@ -64,7 +70,9 @@ $xmltv->addProgramme([
         'clumpidx'         => '1'
     ], function (&$program) {
         $program
+            // Required child
             ->addTitle(['lang' => 'en'], 'Test channel')
+            // Optional children
             ->addSubtitle(['lang' => 'en'], 'Test channel second title')
             ->addDesc(['lang' => 'en'], 'Test channel description')
             ->addCredits(function (&$credits) {
@@ -126,7 +134,7 @@ $xmltv->addProgramme([
     });
 ```
 
-### Check validation
+### Check validation against the [DTD](http://xmltv.cvs.sourceforge.net/viewvc/xmltv/xmltv/xmltv.dtd)
 
 ```
 $xmltv->validate();
@@ -207,7 +215,7 @@ Will produce the following XML:
 
 Magic methods are used to set element attributes and to add an element child.
 
-To set an **id**  attribute, use
+To set an **id** attribute (for example), use
 
 ```php
 $element->setId($value)
@@ -236,4 +244,4 @@ For a test coverage report, look at`build/report`
 
 [![Build Status](https://travis-ci.org/b-alidra/XMLTV-Generator.svg?branch=master)](https://travis-ci.org/b-alidra/XMLTV-Generator)
 [![Coverage Status](https://coveralls.io/repos/github/b-alidra/XMLTV-Generator/badge.svg?branch=master)](https://coveralls.io/github/b-alidra/XMLTV-Generator?branch=master)
-
+[![StyleCI](https://styleci.io/repos/77653136/shield?branch=master)](https://styleci.io/repos/77653136)
