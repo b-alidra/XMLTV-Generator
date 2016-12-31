@@ -75,4 +75,12 @@ class Programme_Test extends Xmltv_Element_TestCase
             ->assertItShouldAllowChild('star-rating')
             ->assertItShouldAllowChild('review');
     }
+
+    /**
+     * @covers ::checkValue
+     */
+    public function testCheckAnyValue()
+    {
+        $this->assertItShouldNotAllowValue('random value');
+    }
 }
