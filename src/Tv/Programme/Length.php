@@ -43,7 +43,7 @@ class Length extends XmltvElement
     {
         parent::checkAttributeValue($attribute, $value);
 
-        // Do not support any text content
+        // Support only seconds, minutes and hours values
         if (!in_array($value, ['seconds', 'minutes', 'hours'])) {
             throw new XmltvException(
                 sprintf(XmltvException::UNSUPPORTED_VALUE_ERROR_MESSAGE, get_called_class(), $value),

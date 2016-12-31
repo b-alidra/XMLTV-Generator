@@ -43,6 +43,7 @@ class Subtitles extends XmltvElement
     {
         parent::checkAttributeValue($attribute, $value);
 
+        // Support only teletext, onscreen and deaf-signed values
         if (!in_array($value, ['teletext', 'onscreen', 'deaf-signed'])) {
             throw new XmltvException(
                 sprintf(XmltvException::UNSUPPORTED_VALUE_ERROR_MESSAGE, get_called_class()),

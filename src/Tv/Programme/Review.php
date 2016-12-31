@@ -48,6 +48,7 @@ class Review extends XmltvElement
     {
         parent::checkAttributeValue($attribute, $value);
 
+        // Support only text and url values
         if ($attribute == 'type' && !in_array($value, ['text', 'url'])) {
             throw new XmltvException(
                 sprintf(XmltvException::UNSUPPORTED_VALUE_ERROR_MESSAGE, get_called_class(), $value),
