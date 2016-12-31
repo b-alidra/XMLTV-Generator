@@ -12,11 +12,17 @@ use \XMLTV\XmltvException;
  */
 class Review extends XmltvElement
 {
+    /**
+     * @see \XMLTV\XmltvElement::getTagName
+     */
     public function getTagName()
     {
         return 'review';
     }
 
+    /**
+     * @see \XMLTV\XmltvElement::getAllowedAttributes
+     */
     public function getAllowedAttributes()
     {
         return [
@@ -27,6 +33,9 @@ class Review extends XmltvElement
         ];
     }
 
+    /**
+     * @see \XMLTV\XmltvElement::getAllowedChildren
+     */
     public function getAllowedChildren()
     {
         return [];

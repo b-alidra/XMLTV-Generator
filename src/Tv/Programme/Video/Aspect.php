@@ -11,16 +11,25 @@ use \XMLTV\XmltvElement;
  */
 class Aspect extends XmltvElement
 {
+    /**
+     * @see \XMLTV\XmltvElement::getTagName
+     */
     public function getTagName()
     {
         return 'aspect';
     }
 
+    /**
+     * @see \XMLTV\XmltvElement::getAllowedAttributes
+     */
     public function getAllowedAttributes()
     {
         return [];
     }
 
+    /**
+     * @see \XMLTV\XmltvElement::getAllowedChildren
+     */
     public function getAllowedChildren()
     {
         return [];

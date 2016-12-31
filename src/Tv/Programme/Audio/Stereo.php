@@ -11,16 +11,25 @@ use \XMLTV\XmltvElement;
  */
 class Stereo extends XmltvElement
 {
+    /**
+     * @see \XMLTV\XmltvElement::getTagName
+     */
     public function getTagName()
     {
         return 'stereo';
     }
 
+    /**
+     * @see \XMLTV\XmltvElement::getAllowedAttributes
+     */
     public function getAllowedAttributes()
     {
         return [];
     }
 
+    /**
+     * @see \XMLTV\XmltvElement::getAllowedChildren
+     */
     public function getAllowedChildren()
     {
         return [];

@@ -12,16 +12,25 @@ use \XMLTV\XmltvException;
  */
 class Credits extends XmltvElement
 {
+    /**
+     * @see \XMLTV\XmltvElement::getTagName
+     */
     public function getTagName()
     {
         return 'credits';
     }
 
+    /**
+     * @see \XMLTV\XmltvElement::getAllowedChildren
+     */
     public function getAllowedAttributes()
     {
         return [];
     }
 
+    /**
+     * @see \XMLTV\XmltvElement::getAllowedChildren
+     */
     public function getAllowedChildren()
     {
         return [

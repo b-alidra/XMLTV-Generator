@@ -12,16 +12,25 @@ use \XMLTV\XmltvException;
  */
 class Rating extends XmltvElement
 {
+    /**
+     * @see \XMLTV\XmltvElement::getTagName
+     */
     public function getTagName()
     {
         return 'rating';
     }
 
+    /**
+     * @see \XMLTV\XmltvElement::getAllowedAttributes
+     */
     public function getAllowedAttributes()
     {
         return [ 'system' => XmltvElement::SINGLE ];
     }
 
+    /**
+     * @see \XMLTV\XmltvElement::getAllowedChildren
+     */
     public function getAllowedChildren()
     {
         return [

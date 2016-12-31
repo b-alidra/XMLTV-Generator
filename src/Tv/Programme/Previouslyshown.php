@@ -12,11 +12,17 @@ use \XMLTV\XmltvException;
  */
 class Previouslyshown extends XmltvElement
 {
+    /**
+     * @see \XMLTV\XmltvElement::getTagName
+     */
     public function getTagName()
     {
         return 'previously-shown';
     }
 
+    /**
+     * @see \XMLTV\XmltvElement::getAllowedAttributes
+     */
     public function getAllowedAttributes()
     {
         return [
@@ -25,6 +31,9 @@ class Previouslyshown extends XmltvElement
         ];
     }
 
+    /**
+     * @see \XMLTV\XmltvElement::getAllowedChildren
+     */
     public function getAllowedChildren()
     {
         return [];

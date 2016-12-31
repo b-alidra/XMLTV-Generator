@@ -12,25 +12,32 @@ use \XMLTV\XmltvException;
  */
 class Subtitles extends XmltvElement
 {
+    /**
+     * @see \XMLTV\XmltvElement::getTagName
+     */
     public function getTagName()
     {
         return 'subtitles';
     }
 
+    /**
+     * @see \XMLTV\XmltvElement::getAllowedAttributes
+     */
     public function getAllowedAttributes()
     {
-        return [
-            'type'             => XmltvElement::SINGLE
-        ];
+        return [ 'type' => XmltvElement::SINGLE ];
     }
 
+    /**
+     * @see \XMLTV\XmltvElement::getAllowedChildren
+     */
     public function getAllowedChildren()
     {
         return [ 'language' => XmltvElement::SINGLE ];
     }
 
     /**
-     * @see \XMLTV\XmltvElement::check_attribute_value
+     * @see \XMLTV\XmltvElement::checkAttributeValue
      */
     public function checkAttributeValue($attribute, $value)
     {

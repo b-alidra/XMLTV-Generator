@@ -67,7 +67,7 @@ abstract class XmltvElement
     abstract public function getAllowedChildren();
 
     /**
-     * Check if the provided value (text content)
+     * Check if the provided value (text content #PCDATA)
      * is valid for this element.
      *
      * By default, authorize any string value.

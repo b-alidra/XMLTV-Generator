@@ -12,23 +12,32 @@ use \XMLTV\XmltvException;
  */
 class Length extends XmltvElement
 {
+    /**
+     * @see \XMLTV\XmltvElement::getTagName
+     */
     public function getTagName()
     {
         return 'length';
     }
 
+    /**
+     * @see \XMLTV\XmltvElement::getAllowedAttributes
+     */
     public function getAllowedAttributes()
     {
         return [ 'units' => XmltvElement::REQUIRED ];
     }
 
+    /**
+     * @see \XMLTV\XmltvElement::getAllowedChildren
+     */
     public function getAllowedChildren()
     {
         return [];
     }
 
     /**
-     * @see \XMLTV\XmltvElement::check_attribute_value
+     * @see \XMLTV\XmltvElement::checkAttributeValue
      */
     public function checkAttributeValue($attribute, $value)
     {
