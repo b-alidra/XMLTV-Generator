@@ -45,4 +45,12 @@ class Channel_Test extends Xmltv_Element_TestCase
             ->assertItShouldAllowChild('icon')
             ->assertItShouldAllowChild('url');
     }
+
+    /**
+     * @covers ::checkValue
+     */
+    public function testCheckAnyValue()
+    {
+        $this->assertItShouldNotAllowValue('random value');
+    }
 }

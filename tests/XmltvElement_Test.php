@@ -15,13 +15,14 @@ class XmltvElement_Test extends \PHPUnit_Framework_TestCase
     public function testCheckNotScalarValue()
     {
         $xmltv = new Xmltv();
-        $xmltv->addChannel(function (&$channel) {
+        $xmltv->addProgramme(function (&$programme) {
+            $programme->addSubtitle(function (&$subtitle) {
+                $this->expectException('\XMLTV\XmltvException');
+                $this->expectExceptionCode(\XMLTV\XmltvException::UNSUPPORTED_VALUE_ERROR_CODE);
+                $this->expectExceptionMessage(sprintf(XmltvException::UNSUPPORTED_VALUE_ERROR_MESSAGE, get_class($subtitle)));
 
-            $this->expectException('\XMLTV\XmltvException');
-            $this->expectExceptionCode(\XMLTV\XmltvException::UNSUPPORTED_VALUE_ERROR_CODE);
-            $this->expectExceptionMessage(sprintf(XmltvException::UNSUPPORTED_VALUE_ERROR_MESSAGE, get_class($channel)));
-
-            $channel->checkValue([]);
+                $subtitle->checkValue([]);
+            });
         });
     }
 

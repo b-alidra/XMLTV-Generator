@@ -2,6 +2,7 @@
 namespace XMLTV\Tv\Programme;
 
 use \XMLTV\XmltvElement;
+use \XMLTV\XmltvException;
 
 /**
  * XMLTV program review
@@ -29,5 +30,20 @@ class Review extends XmltvElement
     public function getAllowedChildren()
     {
         return [];
+    }
+
+    /**
+     * @see \XMLTV\XmltvElement::checkAttributeValue
+     */
+    public function checkAttributeValue($attribute, $value)
+    {
+        parent::checkAttributeValue($attribute, $value);
+
+        if ($attribute == 'type' && !in_array($value, ['text', 'url'])) {
+            throw new XmltvException(
+                sprintf(XmltvException::UNSUPPORTED_VALUE_ERROR_MESSAGE, get_called_class(), $value),
+                XmltvException::UNSUPPORTED_VALUE_ERROR_CODE
+            );
+        }
     }
 }

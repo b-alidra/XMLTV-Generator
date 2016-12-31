@@ -52,4 +52,12 @@ class ProgrammeCredits_Test extends Xmltv_Element_TestCase
             ->assertItShouldAllowChild('commentator')
             ->assertItShouldAllowChild('guest');
     }
+
+    /**
+     * @covers ::checkValue
+     */
+    public function testCheckAnyValue()
+    {
+        $this->assertItShouldNotAllowValue('random value');
+    }
 }

@@ -44,4 +44,12 @@ class ProgrammeAudio_Test extends Xmltv_Element_TestCase
             ->assertItShouldAllowSingleChild('present')
             ->assertItShouldAllowSingleChild('stereo');
     }
+
+    /**
+     * @covers ::checkValue
+     */
+    public function testCheckAnyValue()
+    {
+        $this->assertItShouldNotAllowValue('random value');
+    }
 }

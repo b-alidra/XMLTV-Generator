@@ -45,4 +45,15 @@ class ProgrammeReview_Test extends Xmltv_Element_TestCase
     {
         $this->assertItShouldNotAllowChildren();
     }
+
+    /**
+     * @covers ::checkAttributeValue
+     */
+    public function testCheckAllowedAttributeValues()
+    {
+        $this->assertItShouldAllowAttribute('type', 'text');
+        $this->assertItShouldAllowAttribute('type', 'url');
+
+        $this->assertItShouldNotAllowAttributeValue('type', 'random value');
+    }
 }

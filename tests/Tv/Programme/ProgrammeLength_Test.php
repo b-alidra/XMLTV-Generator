@@ -41,4 +41,16 @@ class ProgrammeLength_Test extends Xmltv_Element_TestCase
     {
         $this->assertItShouldNotAllowChildren();
     }
+
+    /**
+     * @covers ::checkAttributeValue
+     */
+    public function testCheckAllowedAttributeValues()
+    {
+        $this->assertItShouldAllowAttribute('units', 'seconds');
+        $this->assertItShouldAllowAttribute('units', 'minutes');
+        $this->assertItShouldAllowAttribute('units', 'hours');
+
+        $this->assertItShouldNotAllowAttributeValue('units', 'random value');
+    }
 }

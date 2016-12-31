@@ -47,4 +47,12 @@ class RatingIcon_Test extends Xmltv_Element_TestCase
     {
         $this->assertItShouldNotAllowChildren();
     }
+
+    /**
+     * @covers ::checkValue
+     */
+    public function testCheckAnyValue()
+    {
+        $this->assertItShouldNotAllowValue('random value');
+    }
 }

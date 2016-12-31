@@ -2,6 +2,7 @@
 namespace XMLTV\Tv;
 
 use \XMLTV\XmltvElement;
+use \XMLTV\XmltvException;
 
 /**
  * XMLTV program
@@ -67,5 +68,17 @@ class Programme extends XmltvElement
             'star-rating'      => XmltvElement::ALLOWED,
             'review'           => XmltvElement::ALLOWED
         ];
+    }
+
+    /**
+     * @see \XMLTV\XmltvElement::checkValue
+     */
+    public function checkValue($value)
+    {
+        // Do not support any text content
+        throw new XmltvException(
+            sprintf(XmltvException::UNSUPPORTED_VALUE_ERROR_MESSAGE, get_called_class()),
+            XmltvException::UNSUPPORTED_VALUE_ERROR_CODE
+        );
     }
 }

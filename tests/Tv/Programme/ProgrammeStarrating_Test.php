@@ -43,4 +43,12 @@ class ProgrammeStarrating_Test extends Xmltv_Element_TestCase
             ->assertItShouldRequireChild('value')
             ->assertItShouldAllowChild('icon');
     }
+
+    /**
+     * @covers ::checkValue
+     */
+    public function testCheckAnyValue()
+    {
+        $this->assertItShouldNotAllowValue('random value');
+    }
 }

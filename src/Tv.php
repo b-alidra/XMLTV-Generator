@@ -1,6 +1,8 @@
 <?php
 namespace XMLTV;
 
+use \XMLTV\XmltvException;
+
 /**
  * XMLTV tv
  *
@@ -54,5 +56,17 @@ class Tv extends XmltvElement
             'channel'             => XmltvElement::ALLOWED,
             'programme'           => XmltvElement::ALLOWED
         ];
+    }
+
+    /**
+     * @see \XMLTV\XmltvElement::checkValue
+     */
+    public function checkValue($value)
+    {
+        // Do not support any text content
+        throw new XmltvException(
+            sprintf(XmltvException::UNSUPPORTED_VALUE_ERROR_MESSAGE, get_called_class()),
+            XmltvException::UNSUPPORTED_VALUE_ERROR_CODE
+        );
     }
 }

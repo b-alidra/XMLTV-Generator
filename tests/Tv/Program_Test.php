@@ -74,7 +74,5 @@ class Programme_Test extends Xmltv_Element_TestCase
             ->assertItShouldAllowChild('rating')
             ->assertItShouldAllowChild('star-rating')
             ->assertItShouldAllowChild('review');
-
-
     }
 }

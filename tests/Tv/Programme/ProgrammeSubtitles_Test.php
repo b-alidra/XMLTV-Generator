@@ -41,4 +41,24 @@ class ProgrammeSubtitles_Test extends Xmltv_Element_TestCase
     {
         $this->assertItShouldAllowSingleChild('language');
     }
+
+    /**
+     * @covers ::checkAttributeValue
+     */
+    public function testCheckAllowedAttributeValues()
+    {
+        $this->assertItShouldAllowAttribute('type', 'teletext');
+        $this->assertItShouldAllowAttribute('type', 'onscreen');
+        $this->assertItShouldAllowAttribute('type', 'deaf-signed');
+
+        $this->assertItShouldNotAllowAttributeValue('type', 'random value');
+    }
+
+    /**
+     * @covers ::checkValue
+     */
+    public function testCheckAnyValue()
+    {
+        $this->assertItShouldNotAllowValue('random value');
+    }
 }

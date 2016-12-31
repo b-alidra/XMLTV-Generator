@@ -1,6 +1,7 @@
 <?php
 use XMLTV\Xmltv;
 use XMLTV\XmltvElement;
+use XMLTV\XmltvException;
 
 /**
  * @coversDefaultClass \XMLTV\Tv\Channel\Displayname
@@ -47,6 +48,22 @@ return $this;
         return $this;
     }
 
+    public function assertItShouldAllowAttributeValue($attribute, $value)
+    {
+        $this->element->checkAttributeValue($attribute, $value);
+        return $this;
+    }
+
+    public function assertItShouldNotAllowAttributeValue($attribute, $value)
+    {
+        $this->expectException('\XMLTV\XmltvException');
+        $this->expectExceptionCode(XmltvException::UNSUPPORTED_VALUE_ERROR_CODE);
+        $this->expectExceptionMessage(sprintf(XmltvException::UNSUPPORTED_VALUE_ERROR_MESSAGE, get_class($this->element)));
+
+        $this->element->checkAttributeValue($attribute, $value);
+        return $this;
+    }
+
     public function assertItShouldNotAllowChildren()
     {
         $this->assertEmpty($this->element->getAllowedChildren(), "It should not allow any child");
@@ -79,6 +96,23 @@ return $this;
     {
         $allowed = $this->element->getAllowedChildren();
         $this->assertTrue(boolval($allowed[$child] & XmltvElement::SINGLE), sprintf("It should allow single child %s", $child));
+
+        return $this;
+    }
+
+    public function assertItShouldAllowValue($value)
+    {
+        $this->element->checkValue($value);
+        return $this;
+    }
+
+    public function assertItShouldNotAllowValue($value)
+    {
+        $this->expectException('\XMLTV\XmltvException');
+        $this->expectExceptionCode(XmltvException::UNSUPPORTED_VALUE_ERROR_CODE);
+        $this->expectExceptionMessage(sprintf(XmltvException::UNSUPPORTED_VALUE_ERROR_MESSAGE, get_class($this->element)));
+
+        $this->element->checkValue($value);
 
         return $this;
     }
