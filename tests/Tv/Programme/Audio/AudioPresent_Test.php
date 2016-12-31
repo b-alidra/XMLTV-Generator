@@ -1,8 +1,9 @@
 <?php
-use XMLTV\Xmltv;
-use XMLTV\Tv\Programme\Audio\Present;
 
-require_once(dirname(__FILE__) . '/../../../XmltvElementTestCase.php');
+use XMLTV\Tv\Programme\Audio\Present;
+use XMLTV\Xmltv;
+
+require_once dirname(__FILE__).'/../../../XmltvElementTestCase.php';
 
 /**
  * @coversDefaultClass \XMLTV\Tv\Programme\Audio\Present

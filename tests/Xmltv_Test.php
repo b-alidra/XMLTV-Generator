@@ -1,8 +1,8 @@
 <?php
-use XMLTV\Xmltv;
-use XMLTV\XmltvElement;
+
 use XMLTV\Channel;
 use XMLTV\Programme;
+use XMLTV\Xmltv;
 
 /**
  * @coversDefaultClass XMLTV\Xmltv
@@ -41,7 +41,7 @@ class Xmltv_Test extends PHPUnit_Framework_TestCase
                 'vps-start'        => '20161223184000',
                 'showview'         => '???',
                 'videoplus'        => '???',
-                'clumpidx'         => '1'
+                'clumpidx'         => '1',
             ], function (&$program) {
                 $program
                     ->addTitle(['lang' => 'fr'], 'Chaine de test')
@@ -106,7 +106,7 @@ class Xmltv_Test extends PHPUnit_Framework_TestCase
                         'type'     => 'text',
                         'source'   => 'Web',
                         'reviewer' => 'Belkacem Alidra',
-                        'lang'     => 'fr'
+                        'lang'     => 'fr',
                     ]);
             });
     }
@@ -121,7 +121,7 @@ class Xmltv_Test extends PHPUnit_Framework_TestCase
      */
     public function testToXml()
     {
-        $expected = <<<EOF
+        $expected = <<<'EOF'
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE tv PUBLIC "SYSTEM" "http://xmltv.cvs.sourceforge.net/viewvc/xmltv/xmltv/xmltv.dtd">
 <tv date="2016-12-26" source-info-url="https://b-alidra.com/xmltv" source-info-name="XMLTV" source-data-url="https://b-alidra.com/xmltv" generator-info-name="XMLTV" generator-info-url="https://b-alidra.com/xmltv">

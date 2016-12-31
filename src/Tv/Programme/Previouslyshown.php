@@ -1,11 +1,12 @@
 <?php
+
 namespace XMLTV\Tv\Programme;
 
-use \XMLTV\XmltvElement;
-use \XMLTV\XmltvException;
+use XMLTV\XmltvElement;
+use XMLTV\XmltvException;
 
 /**
- * XMLTV program previously shown
+ * XMLTV program previously shown.
  *
  * @author
  *   Belkacem Alidra <dev@b-alidra.com>
@@ -27,7 +28,7 @@ class Previouslyshown extends XmltvElement
     {
         return [
             'start'   => XmltvElement::ALLOWED,
-            'channel' => XmltvElement::ALLOWED
+            'channel' => XmltvElement::ALLOWED,
         ];
     }
 

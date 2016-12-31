@@ -1,11 +1,12 @@
 <?php
+
 namespace XMLTV\Tv;
 
-use \XMLTV\XmltvElement;
-use \XMLTV\XmltvException;
+use XMLTV\XmltvElement;
+use XMLTV\XmltvException;
 
 /**
- * XMLTV program
+ * XMLTV program.
  *
  * @author
  *   Belkacem Alidra <dev@b-alidra.com>
@@ -33,7 +34,7 @@ class Programme extends XmltvElement
             'vps-start'        => XmltvElement::SINGLE,
             'showview'         => XmltvElement::SINGLE,
             'videoplus'        => XmltvElement::SINGLE,
-            'clumpidx'         => XmltvElement::SINGLE
+            'clumpidx'         => XmltvElement::SINGLE,
         ];
     }
 
@@ -66,7 +67,7 @@ class Programme extends XmltvElement
             'subtitles'        => XmltvElement::ALLOWED,
             'rating'           => XmltvElement::ALLOWED,
             'star-rating'      => XmltvElement::ALLOWED,
-            'review'           => XmltvElement::ALLOWED
+            'review'           => XmltvElement::ALLOWED,
         ];
     }
 

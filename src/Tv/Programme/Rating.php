@@ -1,11 +1,12 @@
 <?php
+
 namespace XMLTV\Tv\Programme;
 
-use \XMLTV\XmltvElement;
-use \XMLTV\XmltvException;
+use XMLTV\XmltvElement;
+use XMLTV\XmltvException;
 
 /**
- * XMLTV program rating
+ * XMLTV program rating.
  *
  * @author
  *   Belkacem Alidra <dev@b-alidra.com>
@@ -25,7 +26,7 @@ class Rating extends XmltvElement
      */
     public function getAllowedAttributes()
     {
-        return [ 'system' => XmltvElement::SINGLE ];
+        return ['system' => XmltvElement::SINGLE];
     }
 
     /**
@@ -35,7 +36,7 @@ class Rating extends XmltvElement
     {
         return [
             'value' => XmltvElement::REQUIRED,
-            'icon'  => XmltvElement::ALLOWED
+            'icon'  => XmltvElement::ALLOWED,
         ];
     }
 

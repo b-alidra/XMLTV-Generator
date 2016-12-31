@@ -1,11 +1,12 @@
 <?php
+
 namespace XMLTV\Tv;
 
-use \XMLTV\XmltvElement;
-use \XMLTV\XmltvException;
+use XMLTV\XmltvElement;
+use XMLTV\XmltvException;
 
 /**
- * XMLTV channel
+ * XMLTV channel.
  *
  * Represents the channel tag in the DTD
  *
@@ -27,7 +28,7 @@ class Channel extends XmltvElement
      */
     public function getAllowedAttributes()
     {
-        return [ 'id' => XmltvElement::REQUIRED ];
+        return ['id' => XmltvElement::REQUIRED];
     }
 
     /**
@@ -38,7 +39,7 @@ class Channel extends XmltvElement
         return [
             'display-name' => XmltvElement::REQUIRED,
             'icon'         => XmltvElement::ALLOWED,
-            'url'          => XmltvElement::ALLOWED
+            'url'          => XmltvElement::ALLOWED,
         ];
     }
 

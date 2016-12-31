@@ -1,11 +1,12 @@
 <?php
+
 namespace XMLTV\Tv\Programme;
 
-use \XMLTV\XmltvElement;
-use \XMLTV\XmltvException;
+use XMLTV\XmltvElement;
+use XMLTV\XmltvException;
 
 /**
- * XMLTV program audio
+ * XMLTV program audio.
  *
  * @author
  *   Belkacem Alidra <dev@b-alidra.com>
@@ -35,7 +36,7 @@ class Audio extends XmltvElement
     {
         return [
             'present' => XmltvElement::SINGLE,
-            'stereo'  => XmltvElement::SINGLE
+            'stereo'  => XmltvElement::SINGLE,
         ];
     }
 

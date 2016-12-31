@@ -1,11 +1,12 @@
 <?php
+
 namespace XMLTV\Tv\Programme;
 
-use \XMLTV\XmltvElement;
-use \XMLTV\XmltvException;
+use XMLTV\XmltvElement;
+use XMLTV\XmltvException;
 
 /**
- * XMLTV program subtitles
+ * XMLTV program subtitles.
  *
  * @author
  *   Belkacem Alidra <dev@b-alidra.com>
@@ -25,7 +26,7 @@ class Subtitles extends XmltvElement
      */
     public function getAllowedAttributes()
     {
-        return [ 'type' => XmltvElement::SINGLE ];
+        return ['type' => XmltvElement::SINGLE];
     }
 
     /**
@@ -33,7 +34,7 @@ class Subtitles extends XmltvElement
      */
     public function getAllowedChildren()
     {
-        return [ 'language' => XmltvElement::SINGLE ];
+        return ['language' => XmltvElement::SINGLE];
     }
 
     /**

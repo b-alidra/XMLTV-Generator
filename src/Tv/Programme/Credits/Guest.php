@@ -1,10 +1,11 @@
 <?php
+
 namespace XMLTV\Tv\Programme\Credits;
 
-use \XMLTV\XmltvElement;
+use XMLTV\XmltvElement;
 
 /**
- * XMLTV program credits guest
+ * XMLTV program credits guest.
  *
  * @author
  *   Belkacem Alidra <dev@b-alidra.com>
