@@ -1,8 +1,9 @@
 <?php
+
+use XMLTV\Tv\Channel;
 use XMLTV\Xmltv;
 use XMLTV\XmltvElement;
 use XMLTV\XmltvException;
-use XMLTV\Tv\Channel;
 
 /**
  * @coversDefaultClass \XMLTV\XmltvElement
@@ -149,7 +150,6 @@ class XmltvElement_Test extends \PHPUnit_Framework_TestCase
      */
     public function testValidationMultipleChild()
     {
-
         $xmltv = new Xmltv();
         $xmltv->addProgramme(function (&$programme) {
             $programme
@@ -206,8 +206,9 @@ class XmltvElement_Test extends \PHPUnit_Framework_TestCase
              ->will($this->returnValue(['title' => XmltvElement::ALLOWED]));
 
         $attributes = ['test-attr' => 'test-value'];
-        $value      = 'test-title';
-        $callback   = function (&$child) {};
+        $value = 'test-title';
+        $callback = function (&$child) {
+        };
 
         $stub->expects($this->once())
                  ->method('_addChild')

@@ -1,11 +1,12 @@
 <?php
+
 namespace XMLTV\Tv\Programme;
 
-use \XMLTV\XmltvElement;
-use \XMLTV\XmltvException;
+use XMLTV\XmltvElement;
+use XMLTV\XmltvException;
 
 /**
- * XMLTV program video
+ * XMLTV program video.
  *
  * @author
  *   Belkacem Alidra <dev@b-alidra.com>
@@ -37,7 +38,7 @@ class Video extends XmltvElement
             'present' => XmltvElement::SINGLE,
             'colour'  => XmltvElement::SINGLE,
             'aspect'  => XmltvElement::SINGLE,
-            'quality' => XmltvElement::SINGLE
+            'quality' => XmltvElement::SINGLE,
         ];
     }
 

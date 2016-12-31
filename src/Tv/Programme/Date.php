@@ -1,10 +1,11 @@
 <?php
+
 namespace XMLTV\Tv\Programme;
 
-use \XMLTV\XmltvElement;
+use XMLTV\XmltvElement;
 
 /**
- * XMLTV program date
+ * XMLTV program date.
  *
  * @author
  *   Belkacem Alidra <dev@b-alidra.com>

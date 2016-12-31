@@ -1,11 +1,12 @@
 <?php
+
 namespace XMLTV\Tv\Programme;
 
-use \XMLTV\XmltvElement;
-use \XMLTV\XmltvException;
+use XMLTV\XmltvElement;
+use XMLTV\XmltvException;
 
 /**
- * XMLTV program review
+ * XMLTV program review.
  *
  * @author
  *   Belkacem Alidra <dev@b-alidra.com>
@@ -29,7 +30,7 @@ class Review extends XmltvElement
             'type'     => XmltvElement::REQUIRED,
             'source'   => XmltvElement::SINGLE,
             'reviewer' => XmltvElement::SINGLE,
-            'lang'     => XmltvElement::SINGLE
+            'lang'     => XmltvElement::SINGLE,
         ];
     }
 

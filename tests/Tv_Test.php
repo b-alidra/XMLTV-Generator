@@ -1,8 +1,9 @@
 <?php
+
 use XMLTV\Xmltv;
 use XMLTV\XmltvException;
 
-require_once(dirname(__FILE__) . '/XmltvElementTestCase.php');
+require_once dirname(__FILE__).'/XmltvElementTestCase.php';
 
 /**
  * @coversDefaultClass \XMLTV\Tv

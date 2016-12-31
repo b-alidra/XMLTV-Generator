@@ -1,10 +1,11 @@
 <?php
+
 namespace XMLTV\Tv\Programme\Credits;
 
-use \XMLTV\XmltvElement;
+use XMLTV\XmltvElement;
 
 /**
- * XMLTV program credits actor
+ * XMLTV program credits actor.
  *
  * @author
  *   Belkacem Alidra <dev@b-alidra.com>
@@ -24,7 +25,7 @@ class Actor extends XmltvElement
      */
     public function getAllowedAttributes()
     {
-        return [ 'role' => XmltvElement::ALLOWED ];
+        return ['role' => XmltvElement::ALLOWED];
     }
 
     /**

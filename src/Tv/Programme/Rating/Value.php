@@ -1,10 +1,11 @@
 <?php
+
 namespace XMLTV\Tv\Programme\Rating;
 
-use \XMLTV\XmltvElement;
+use XMLTV\XmltvElement;
 
 /**
- * XMLTV program rating value
+ * XMLTV program rating value.
  *
  * @author
  *   Belkacem Alidra <dev@b-alidra.com>

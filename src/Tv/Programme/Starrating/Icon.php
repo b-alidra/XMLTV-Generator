@@ -1,11 +1,12 @@
 <?php
+
 namespace XMLTV\Tv\Programme\StarRating;
 
-use \XMLTV\XmltvElement;
+use XMLTV\XmltvElement;
 use XMLTV\XmltvException;
 
 /**
- * XMLTV program star rating icon
+ * XMLTV program star rating icon.
  *
  * @author
  *   Belkacem Alidra <dev@b-alidra.com>
