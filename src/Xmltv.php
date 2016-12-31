@@ -1,8 +1,9 @@
 <?php
+
 namespace XMLTV;
 
 /**
- * XMLTV generator
+ * XMLTV generator.
  *
  * @see http://wiki.xmltv.org/index.php/XMLTVFormat
  *
@@ -21,11 +22,11 @@ namespace XMLTV;
 class Xmltv
 {
     /**
-     * DTD informations constants
+     * DTD informations constants.
      */
     const QUALIFIED_NAME = 'tv';
-    const PUBLIC_ID      = 'SYSTEM';
-    const DTD            = 'http://xmltv.cvs.sourceforge.net/viewvc/xmltv/xmltv/xmltv.dtd';
+    const PUBLIC_ID = 'SYSTEM';
+    const DTD = 'http://xmltv.cvs.sourceforge.net/viewvc/xmltv/xmltv/xmltv.dtd';
 
     /**
      * @var \DomDocument
@@ -38,20 +39,20 @@ class Xmltv
     protected $root;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param array $attributes: Attributes of the root tv element
      */
     public function __construct($attributes = [])
     {
         $this->_document = $this->_createDocument();
-        $this->root      = new Tv($this->_document, $attributes);
+        $this->root = new Tv($this->_document, $attributes);
 
         $this->root->appendTo($this->_document);
     }
 
     /**
-     * Validate the resulting xml against the externl DTD
+     * Validate the resulting xml against the externl DTD.
      *
      * @return boolean: True if the document is valid, false otherwise
      */
@@ -61,10 +62,10 @@ class Xmltv
     }
 
     /**
-     * Output the result
+     * Output the result.
      *
-     * @param boolean $validateDTD: True to validate against the external DTD,
-     *                              false otherwise (default).
+     * @param bool $validateDTD: True to validate against the external DTD,
+     *                           false otherwise (default).
      *
      * @return string: Valid XML
      *
@@ -82,25 +83,25 @@ class Xmltv
     }
 
     /**
-     * Create the DomDocument instance
+     * Create the DomDocument instance.
      *
      * @return \DomDocument: The document
      */
     protected function _createDocument()
     {
         $implementation = new \DOMImplementation();
-        $dtd            = $implementation->createDocumentType(static::QUALIFIED_NAME, static::PUBLIC_ID, static::DTD);
-        $document       = $implementation->createDocument('', '', $dtd);
+        $dtd = $implementation->createDocumentType(static::QUALIFIED_NAME, static::PUBLIC_ID, static::DTD);
+        $document = $implementation->createDocument('', '', $dtd);
 
-        $document->encoding           = 'UTF-8';
+        $document->encoding = 'UTF-8';
         $document->preserveWhiteSpace = false;
-        $document->formatOutput       = true;
+        $document->formatOutput = true;
 
         return $document;
     }
 
     /**
-     * Proxy to the root element
+     * Proxy to the root element.
      */
     public function __call($name, $arguments)
     {

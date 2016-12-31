@@ -1,10 +1,11 @@
 <?php
+
 namespace XMLTV\Tv\Programme\Audio;
 
-use \XMLTV\XmltvElement;
+use XMLTV\XmltvElement;
 
 /**
- * XMLTV program audio stereo
+ * XMLTV program audio stereo.
  *
  * @author
  *   Belkacem Alidra <dev@b-alidra.com>

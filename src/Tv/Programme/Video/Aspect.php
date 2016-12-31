@@ -1,10 +1,11 @@
 <?php
+
 namespace XMLTV\Tv\Programme\Video;
 
-use \XMLTV\XmltvElement;
+use XMLTV\XmltvElement;
 
 /**
- * XMLTV program video aspect
+ * XMLTV program video aspect.
  *
  * @author
  *   Belkacem Alidra <dev@b-alidra.com>

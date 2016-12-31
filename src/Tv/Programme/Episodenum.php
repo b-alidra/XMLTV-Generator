@@ -1,10 +1,11 @@
 <?php
+
 namespace XMLTV\Tv\Programme;
 
-use \XMLTV\XmltvElement;
+use XMLTV\XmltvElement;
 
 /**
- * XMLTV program episode number
+ * XMLTV program episode number.
  *
  * @author
  *   Belkacem Alidra <dev@b-alidra.com>
@@ -24,7 +25,7 @@ class Episodenum extends XmltvElement
      */
     public function getAllowedAttributes()
     {
-        return [ 'system' => XmltvElement::ALLOWED ];
+        return ['system' => XmltvElement::ALLOWED];
     }
 
     /**

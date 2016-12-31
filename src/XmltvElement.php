@@ -1,8 +1,9 @@
 <?php
+
 namespace XMLTV;
 
 /**
- * XMLTV Element
+ * XMLTV Element.
  *
  * Represents an element in the XMLTV DTD
  *
@@ -34,35 +35,36 @@ abstract class XmltvElement
     protected $children;
 
     /**
-     * Constants used to define rules for each tag attribute and child
+     * Constants used to define rules for each tag attribute and child.
      */
-    const ALLOWED  = 0x01;
+    const ALLOWED = 0x01;
     const REQUIRED = 0x02;
-    const SINGLE   = 0x04;
+    const SINGLE = 0x04;
 
     /**
-     * Return the element tag name
+     * Return the element tag name.
      *
      * @abstract
+     *
      * @return string The element tag name
      */
     abstract public function getTagName();
 
     /**
-     * Return the allowed attributes for this element
+     * Return the allowed attributes for this element.
      *
      * @return array An array containing allowed attributes.
-     *                For each attribute (key), define the presence rules using
-     *                ::ALLOWED, ::SINGLE and ::REQUIRED.
+     *               For each attribute (key), define the presence rules using
+     *               ::ALLOWED, ::SINGLE and ::REQUIRED.
      */
     abstract public function getAllowedAttributes();
 
     /**
-     * Return the allowed children for this element
+     * Return the allowed children for this element.
      *
      * @return array An array containing allowed children.
-     *                For each child (key), define the presence rules using
-     *                ::ALLOWED, ::SINGLE and ::REQUIRED.
+     *               For each child (key), define the presence rules using
+     *               ::ALLOWED, ::SINGLE and ::REQUIRED.
      */
     abstract public function getAllowedChildren();
 
@@ -92,8 +94,7 @@ abstract class XmltvElement
      * Should be overridden for specific cases.
      *
      * @param string $attribute The attribute to check
-     *
-     * @param string $value The value to check
+     * @param string $value     The value to check
      *
      * @throws \XMLTV\XmltvException if this attribute already exists
      *                               or the value is not valid
@@ -116,23 +117,20 @@ abstract class XmltvElement
     }
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param \DomDocument $document The document this element will be attached to
-     *
-     * @param array $attributes Array of attributes as $name => $value
-     *
-     * @param string $value The element value
-     *
-     * @param callable $callback Callback function which receives the new
-     *                            created element as argument
+     * @param \DomDocument $document   The document this element will be attached to
+     * @param array        $attributes Array of attributes as $name => $value
+     * @param string       $value      The element value
+     * @param callable     $callback   Callback function which receives the new
+     *                                 created element as argument
      */
     public function __construct(\DomDocument $document, $attributes = [], $value = null, $callback = null)
     {
         $this->children = [];
 
         $this->_document = $document;
-        $this->_xml      = $this->_document->createElement($this->getTagName(), /*see PHP Bug #31191*/null);
+        $this->_xml = $this->_document->createElement($this->getTagName(), /*see PHP Bug #31191*/null);
 
         foreach ($attributes as $attr_name => $attr_value) {
             $this->_setAttribute($attr_name, $attr_value);
@@ -148,7 +146,7 @@ abstract class XmltvElement
     }
 
     /**
-     * Attach this element to a Dom node
+     * Attach this element to a Dom node.
      *
      * @param \DomNode $parent The noe to attach the element to
      */
@@ -159,7 +157,7 @@ abstract class XmltvElement
     }
 
     /**
-     * Detach this element from his parent, if any
+     * Detach this element from his parent, if any.
      */
     public function remove()
     {
@@ -170,10 +168,9 @@ abstract class XmltvElement
     }
 
     /**
-     * Set one of this element attributes
+     * Set one of this element attributes.
      *
-     * @param string $name The attribute name
-     *
+     * @param string $name  The attribute name
      * @param string $value The attribute value
      *
      * @throws \XMLTV\XmltvException if the attribute already exists
@@ -189,7 +186,7 @@ abstract class XmltvElement
     }
 
     /**
-     * Set this element text value
+     * Set this element text value.
      *
      * @param string $value The text value
      *
@@ -206,11 +203,10 @@ abstract class XmltvElement
     }
 
     /**
-     * Add a child to this element
+     * Add a child to this element.
      *
      * @param string $name The child tag name
-     *
-     * @param mixed $args The child attributes and/or value and/or callback function
+     * @param mixed  $args The child attributes and/or value and/or callback function
      *
      * @return \XMLTV\XmltvElement
      */
@@ -223,22 +219,20 @@ abstract class XmltvElement
         array_shift($arguments);
 
         $attributes = [];
-        $value      = null;
-        $callback   = null;
+        $value = null;
+        $callback = null;
         foreach ($arguments as $arg) {
             if (is_array($arg)) {
                 $attributes = $arg;
-            }
-            elseif (is_callable($arg)) {
+            } elseif (is_callable($arg)) {
                 $callback = $arg;
-            }
-            elseif (!is_null($arg)) {
+            } elseif (!is_null($arg)) {
                 $value = $arg;
             }
         }
 
         $reflection = new \ReflectionClass($childClass);
-        $child      = $reflection->newInstance($this->_document, $attributes, $value, $callback);
+        $child = $reflection->newInstance($this->_document, $attributes, $value, $callback);
 
         $this->children[] = $child;
 
@@ -246,7 +240,7 @@ abstract class XmltvElement
     }
 
     /**
-     * Attach all this element children
+     * Attach all this element children.
      */
     protected function _attachChildren()
     {
@@ -264,7 +258,8 @@ abstract class XmltvElement
         usort($this->children, function ($a, $b) use ($allowed_children) {
             $index_a = array_search($a->getTagName(), $allowed_children);
             $index_b = array_search($b->getTagName(), $allowed_children);
-            return $index_a < $index_b ? -1 : ( $index_a > $index_b ? 1 : 0 );
+
+            return $index_a < $index_b ? -1 : ($index_a > $index_b ? 1 : 0);
         });
 
         // Append the children
@@ -279,7 +274,7 @@ abstract class XmltvElement
     }
 
     /**
-     * Call the internal validation
+     * Call the internal validation.
      *
      * @throws \XMLTV\XmltvException if the validation fails
      */
@@ -309,7 +304,7 @@ abstract class XmltvElement
 
         // Check missing required children and single children
         foreach ($this->getAllowedChildren() as $name => $rules) {
-            $xpath    = new \DOMXPath($this->_document);
+            $xpath = new \DOMXPath($this->_document);
             $children = $xpath->query('./'.$name, $this->_xml);
             if ($children->length == 0 && ($rules & static::REQUIRED)) {
                 throw new XmltvException(
@@ -328,7 +323,7 @@ abstract class XmltvElement
     }
 
     /**
-     * Magic method to handle add* and set* calls
+     * Magic method to handle add* and set* calls.
      *
      * Attributes setters are in the following form:
      *  set[ucfirst(strtolower(str_replace('-', '', $attribute_name))]($value)
@@ -346,7 +341,8 @@ abstract class XmltvElement
             foreach ($this->getAllowedAttributes() as $attribute => $rules) {
                 if (ucfirst(strtolower(str_replace('-', '', $attribute))) == $called_attribute) {
                     array_unshift($arguments, $attribute);
-                    return call_user_func_array([ $this, '_setAttribute' ], $arguments);
+
+                    return call_user_func_array([$this, '_setAttribute'], $arguments);
                 }
             }
             throw new XmltvException(
@@ -364,7 +360,8 @@ abstract class XmltvElement
             foreach ($this->getAllowedChildren() as $child => $rules) {
                 if (ucfirst(strtolower(str_replace('-', '', $child))) == $called_child) {
                     array_unshift($arguments, $child);
-                    return call_user_func_array([ $this, '_addChild' ], $arguments);
+
+                    return call_user_func_array([$this, '_addChild'], $arguments);
                 }
             }
             throw new XmltvException(

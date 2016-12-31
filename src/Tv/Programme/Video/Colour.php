@@ -1,10 +1,11 @@
 <?php
+
 namespace XMLTV\Tv\Programme\Video;
 
-use \XMLTV\XmltvElement;
+use XMLTV\XmltvElement;
 
 /**
- * XMLTV program video colour
+ * XMLTV program video colour.
  *
  * @author
  *   Belkacem Alidra <dev@b-alidra.com>

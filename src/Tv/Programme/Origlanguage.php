@@ -1,15 +1,16 @@
 <?php
+
 namespace XMLTV\Tv\Programme;
 
-use \XMLTV\XmltvElement;
+use XMLTV\XmltvElement;
 
 /**
- * XMLTV program original language
+ * XMLTV program original language.
  *
  * @author
  *   Belkacem Alidra <dev@b-alidra.com>
  */
-class OrigLanguage extends XmltvElement
+class Origlanguage extends XmltvElement
 {
     /**
      * @see \XMLTV\XmltvElement::getTagName
@@ -24,7 +25,7 @@ class OrigLanguage extends XmltvElement
      */
     public function getAllowedAttributes()
     {
-        return [ 'lang' => XmltvElement::ALLOWED ];
+        return ['lang' => XmltvElement::ALLOWED];
     }
 
     /**

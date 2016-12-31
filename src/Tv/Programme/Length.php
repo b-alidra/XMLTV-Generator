@@ -1,11 +1,12 @@
 <?php
+
 namespace XMLTV\Tv\Programme;
 
-use \XMLTV\XmltvElement;
-use \XMLTV\XmltvException;
+use XMLTV\XmltvElement;
+use XMLTV\XmltvException;
 
 /**
- * XMLTV program length
+ * XMLTV program length.
  *
  * @author
  *   Belkacem Alidra <dev@b-alidra.com>
@@ -25,7 +26,7 @@ class Length extends XmltvElement
      */
     public function getAllowedAttributes()
     {
-        return [ 'units' => XmltvElement::REQUIRED ];
+        return ['units' => XmltvElement::REQUIRED];
     }
 
     /**

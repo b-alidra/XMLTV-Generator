@@ -1,10 +1,11 @@
 <?php
+
 namespace XMLTV\Tv\Programme\Video;
 
-use \XMLTV\XmltvElement;
+use XMLTV\XmltvElement;
 
 /**
- * XMLTV program video quality
+ * XMLTV program video quality.
  *
  * @author
  *   Belkacem Alidra <dev@b-alidra.com>

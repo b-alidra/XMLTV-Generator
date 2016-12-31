@@ -1,10 +1,11 @@
 <?php
+
 namespace XMLTV\Tv\Programme;
 
-use \XMLTV\XmltvElement;
+use XMLTV\XmltvElement;
 
 /**
- * XMLTV program last chance
+ * XMLTV program last chance.
  *
  * @author
  *   Belkacem Alidra <dev@b-alidra.com>
@@ -24,7 +25,7 @@ class Lastchance extends XmltvElement
      */
     public function getAllowedAttributes()
     {
-        return [ 'lang' => XmltvElement::ALLOWED ];
+        return ['lang' => XmltvElement::ALLOWED];
     }
 
     /**

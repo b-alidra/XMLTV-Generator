@@ -1,10 +1,11 @@
 <?php
+
 namespace XMLTV;
 
-use \XMLTV\XmltvException;
+use XMLTV\XmltvException;
 
 /**
- * XMLTV tv
+ * XMLTV tv.
  *
  * Represents the tv root element in the DTD
  *
@@ -54,7 +55,7 @@ class Tv extends XmltvElement
     {
         return [
             'channel'             => XmltvElement::ALLOWED,
-            'programme'           => XmltvElement::ALLOWED
+            'programme'           => XmltvElement::ALLOWED,
         ];
     }
 

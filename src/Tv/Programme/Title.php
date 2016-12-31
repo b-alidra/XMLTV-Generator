@@ -1,12 +1,12 @@
 <?php
+
 namespace XMLTV\Tv\Programme;
 
-use \XMLTV\XmltvElement;
+use XMLTV\XmltvElement;
 
 /**
 
-use \XMLTV\XmltvElement;
- * XMLTV program title
+ * XMLTV program title.
  *
  * @author
  *   Belkacem Alidra <dev@b-alidra.com>
@@ -26,7 +26,7 @@ class Title extends XmltvElement
      */
     public function getAllowedAttributes()
     {
-        return [ 'lang' => XmltvElement::ALLOWED ];
+        return ['lang' => XmltvElement::ALLOWED];
     }
 
     /**

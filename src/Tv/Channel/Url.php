@@ -1,10 +1,11 @@
 <?php
+
 namespace XMLTV\Tv\Channel;
 
-use \XMLTV\XmltvElement;
+use XMLTV\XmltvElement;
 
 /**
- * XMLTV channel url
+ * XMLTV channel url.
  *
  * @author
  *   Belkacem Alidra <dev@b-alidra.com>

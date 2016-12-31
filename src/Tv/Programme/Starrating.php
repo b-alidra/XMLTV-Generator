@@ -1,11 +1,12 @@
 <?php
+
 namespace XMLTV\Tv\Programme;
 
-use \XMLTV\XmltvElement;
-use \XMLTV\XmltvException;
+use XMLTV\XmltvElement;
+use XMLTV\XmltvException;
 
 /**
- * XMLTV program star rating
+ * XMLTV program star rating.
  *
  * @author
  *   Belkacem Alidra <dev@b-alidra.com>
@@ -25,7 +26,7 @@ class Starrating extends XmltvElement
      */
     public function getAllowedAttributes()
     {
-        return [ 'system' => XmltvElement::SINGLE ];
+        return ['system' => XmltvElement::SINGLE];
     }
 
     /**
@@ -35,7 +36,7 @@ class Starrating extends XmltvElement
     {
         return [
             'value' => XmltvElement::REQUIRED,
-            'icon'  => XmltvElement::ALLOWED
+            'icon'  => XmltvElement::ALLOWED,
         ];
     }
 

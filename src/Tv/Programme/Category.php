@@ -1,10 +1,11 @@
 <?php
+
 namespace XMLTV\Tv\Programme;
 
-use \XMLTV\XmltvElement;
+use XMLTV\XmltvElement;
 
 /**
- * XMLTV program category
+ * XMLTV program category.
  *
  * @author
  *   Belkacem Alidra <dev@b-alidra.com>
@@ -24,7 +25,7 @@ class Category extends XmltvElement
      */
     public function getAllowedAttributes()
     {
-        return [ 'lang' => XmltvElement::ALLOWED ];
+        return ['lang' => XmltvElement::ALLOWED];
     }
 
     /**

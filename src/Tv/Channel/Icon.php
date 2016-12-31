@@ -1,11 +1,12 @@
 <?php
+
 namespace XMLTV\Tv\Channel;
 
-use \XMLTV\XmltvElement;
+use XMLTV\XmltvElement;
 use XMLTV\XmltvException;
 
 /**
- * XMLTV channel icon
+ * XMLTV channel icon.
  *
  * @author
  *   Belkacem Alidra <dev@b-alidra.com>
