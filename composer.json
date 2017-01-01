@@ -9,7 +9,7 @@
             "email": "dev@b-alidra.com"
         }
     ],
-    "version": "0.1.0",
+    "version": "1.0.0",
     "require": {
         "php" : ">=5.6"
     },
