@@ -88,7 +88,7 @@ class Xmltv_Test extends PHPUnit_Framework_TestCase
                     ->addPreviouslyshown([])
                     ->addPremiere('')
                     ->addLastchance('')
-                    //->add_new('')
+                    ->addNew()
                     ->addSubtitles(function (&$subtitles) {
                         $subtitles->addLanguage('English');
                     })
@@ -175,6 +175,7 @@ class Xmltv_Test extends PHPUnit_Framework_TestCase
     <previously-shown/>
     <premiere/>
     <last-chance/>
+    <new/>
     <subtitles>
       <language>English</language>
     </subtitles>

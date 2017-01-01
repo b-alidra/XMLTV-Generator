@@ -18,6 +18,16 @@ class Programme_Test extends Xmltv_Element_TestCase
     }
 
     /**
+     * @covers ::addNew
+     */
+    public function testAddNew()
+    {
+        $this->element->addNew(function (&$new) {
+            $this->assertInstanceOf('XMLTV\Tv\Programme\NewElement', $new);
+        });
+    }
+
+    /**
      * @covers ::getTagName
      */
     public function testGetTagName()

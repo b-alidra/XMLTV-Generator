@@ -14,6 +14,21 @@ use XMLTV\XmltvException;
 class Programme extends XmltvElement
 {
     /**
+     * Add to this programme a <new/> child
+     *
+     * @param callable $callback Callback function which receives the new
+     *                           created element as argument
+     */
+    public function addNew($callback = null)
+    {
+        $new = new Programme\NewElement($this->_document, [], null, $callback);
+
+        $this->children[] = $new;
+
+        return $this;
+    }
+
+    /**
      * @see \XMLTV\XmltvElement::getTagName
      */
     public function getTagName()
