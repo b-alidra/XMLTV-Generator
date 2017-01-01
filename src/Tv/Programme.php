@@ -14,7 +14,7 @@ use XMLTV\XmltvException;
 class Programme extends XmltvElement
 {
     /**
-     * Add to this programme a <new/> child
+     * Add to this programme a <new/> child.
      *
      * @param callable $callback Callback function which receives the new
      *                           created element as argument
