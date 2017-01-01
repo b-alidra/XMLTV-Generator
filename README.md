@@ -15,7 +15,7 @@
 ## Installation:
 
 The library is [PSR-4 compliant](http://www.php-fig.org/psr/psr-4)
- and the simplest way to install it is via composer:
+and the simplest way to install it is via composer:
 
      composer require b-alidra/xmltv
 
@@ -111,6 +111,7 @@ $xmltv->addProgramme([
             ->addPreviouslyshown([])
             ->addPremiere('')
             ->addLastchance('')
+            ->addNew()
             ->addSubtitles(function (&$subtitles) {
                 $subtitles->addLanguage('English');
             })
@@ -195,6 +196,7 @@ Will produce the following XML:
     <previously-shown/>
     <premiere/>
     <last-chance/>
+    <new/>
     <subtitles>
       <language>English</language>
     </subtitles>
