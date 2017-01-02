@@ -1,4 +1,5 @@
 
+[![Latest Stable Version](https://poser.pugx.org/b-alidra/xmltv/v/stable)](https://packagist.org/packages/b-alidra/xmltv)
 [![Build Status](https://travis-ci.org/b-alidra/XMLTV-Generator.svg?branch=master)](https://travis-ci.org/b-alidra/XMLTV-Generator)
 [![Coverage Status](https://coveralls.io/repos/github/b-alidra/XMLTV-Generator/badge.svg?branch=master)](https://coveralls.io/github/b-alidra/XMLTV-Generator?branch=master)
 [![StyleCI](https://styleci.io/repos/77653136/shield?branch=master)](https://styleci.io/repos/77653136)
@@ -244,6 +245,7 @@ For a test coverage report, look at`build/report`
 
 [MIT](LICENSE)
 
+[![Latest Stable Version](https://poser.pugx.org/b-alidra/xmltv/v/stable)](https://packagist.org/packages/b-alidra/xmltv)
 [![Build Status](https://travis-ci.org/b-alidra/XMLTV-Generator.svg?branch=master)](https://travis-ci.org/b-alidra/XMLTV-Generator)
 [![Coverage Status](https://coveralls.io/repos/github/b-alidra/XMLTV-Generator/badge.svg?branch=master)](https://coveralls.io/github/b-alidra/XMLTV-Generator?branch=master)
 [![StyleCI](https://styleci.io/repos/77653136/shield?branch=master)](https://styleci.io/repos/77653136)
